@@ -25,6 +25,8 @@ export default class Agent{
     this.exportRender();
     //2. サービスのロード & ユーザデータのロード
     //3. サービスのレンダリング
+    this.getServices();
+    this.loadServices();
   }
 
   exportRender(){

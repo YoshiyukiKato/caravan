@@ -1,0 +1,169 @@
+$fontsize: 12px;
+//とりあえずモノクロで作る
+$c1 : #FAFAFA;
+$c2 : #F5F5F5;
+$c3 : #EEEEEE;
+$c4 : #E0E0E0;
+$c5 : #BDBDBD;
+$c6 : #9E9E9E;
+$c7 : #757575;
+$c8 : #616161;
+$c9 : #424242;
+$c10 : #212121;
+
+@mixin padding($basesize){
+  @include padding-hrz($basesize);
+  @include padding-vrt($basesize / 3);
+}
+
+@mixin padding-vrt($size){
+  padding-top : $size;
+  padding-bottom : $size;
+}
+
+@mixin padding-hrz($size){
+  padding-left : $size;
+  padding-right : $size;
+}
+
+@mixin margin($basesize){
+  @include margin-hrz($basesize);
+  @include margin-vrt($basesize / 3);
+}
+
+@mixin margin-vrt($size){
+  margin-top : $size;
+  margin-bottom : $size;
+}
+
+@mixin margin-hrz($size){
+  margin-left : $size;
+  margin-right : $size;
+}
+
+@mixin button($border-color, $background-color, $text-color){
+  display : inline-block;
+  border : 1px solid $border-color;
+  border-radius : 2px;
+  background-color : $background-color;
+  font-size : $fontsize * 0.6;
+  color : $text-color;
+  &:hover{
+    background-color : $border-color;
+  }
+
+  @include padding-hrz($fontsize);
+  @include padding-vrt($fontsize / 6);
+}
+
+*{
+  padding : 0px;
+  margin : 0px;
+  font-size : $fontsize;
+}
+
+button{
+  padding : 0px;
+  margin : 0px;
+}
+
+ul li{
+  list-style: none;
+}
+
+input{
+  border : solid 1px $c3;
+  border-radius : 2px;
+}
+
+.button{
+  @include button($c4, $c3, black);
+}
+
+.input{
+  border : solid 1px $c3;
+  border-radius : 2px;
+  @include padding(6px);
+}
+
+.file-node .item-header{
+  padding-left : $fontsize;//数合わせ
+}
+
+.item-header{
+  display : flex;
+  
+  &:hover{
+    background-color : $c2;
+  }
+  & > div{
+    @include padding-vrt($fontsize / 3);
+  }
+  .item-icon, .item-name{
+    @include margin-hrz($fontsize / 2);
+  }
+}
+
+.item-name{
+  &.item-name-close{
+    input{
+      border : none;
+      padding : 0px;
+      margin : 0px;
+      background-color : white;
+      &[readonly]{
+        background-color : rgba(0,0,0,0);
+      }
+    }
+  }
+}
+
+.item-menu{
+  position : relative;
+  ul{
+    top : $fontsize;
+    left : $fontsize;
+    position : absolute;
+    z-index : 5;
+    display : none;
+    width : $fontsize * 12;
+    background-color : $c1;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    li{
+      .item-menu-icon{
+        display : none;
+      }
+      @include padding($fontsize);
+      &:hover{
+        cursor : pointer;
+        background-color : $c3;
+      }
+    }
+  }
+  
+  &:hover ul{
+    display : block;
+  }
+}
+
+.item-children-toggle{
+  &:hover{
+    cursor : pointer;
+  }
+  &.item-children-toggle-open svg{
+    transform : rotate(0deg);
+  }
+  &.item-children-toggle-close svg{
+    transform : rotate(-90deg);
+  }
+}
+
+.item-children{
+  padding-left : $fontsize;
+  &.item-children-open{
+    display : block;
+  }
+  &.item-children-close{
+    display : none;
+  }
+}

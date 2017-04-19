@@ -14,15 +14,16 @@ export default class Agent{
   }
 
   init(){
-    //1. 描画インタフェース関数のエクスポート
-    this.exportRender();
-    //2. サービスのロード & ユーザデータのロード
+    this.exportProvide();
     const servicesPromise = this.getServices();
     const userDataPromise = this.getUserData();
-    Promise.all(servicesPromise, userDataPromise)
+    Promise.all([userDataPromise, servicesPromise])
     .then((result) => {
-      this.services = result[0];
       this.user = result[1];
+      this.services = result[0];
+      this.services.forEach((service) => {
+        service.load(this.codebase);
+      });
     });
   }
 
@@ -48,10 +49,7 @@ export default class Agent{
       //idで引けるようにして
       services[service.id] = new Service(service);
       return services;
-    }, [])
-    .map((service) => {
-      service.load(this.codebase);
-    });
+    }, []);
   }
 
   getUserData(){

@@ -1,11 +1,16 @@
 import Agent from "../src/lib/agent";
 import assert from "power-assert";
 
-const testUrl = "/testurl";
-const testApi = "/testapi";
-const testCodebase = "/testcodebase";
+const config = {
+  env : "dev",
+  api : "/testapi",
+  codebase : "/testcodebase"
+};
+const url = "/testurl";
+const user = { visitor_id : "testuser" }
 
 var server;
+
 describe("agent",  () => {
   before(() => {
     server = sinon.fakeServer.create();
@@ -16,19 +21,19 @@ describe("agent",  () => {
   });
 
   it("creates new agent", () => {
-    const agent = new Agent(testUrl, testApi, testCodebase);
+    const agent = new Agent(config, url, user);
     assert(agent);
   });
 
-  it("loads services data", () => {
-    const agent = new Agent(testUrl, testApi, testCodebase);
-    const testServices = { services : [{ pattern : "testurl" }, { pattern : "hoge" }] };
+  it("get services data", (done) => {
+    const agent = new Agent(config, url, user);
+    const services = { services : [{ pattern : "testurl" }, { pattern : "hoge" }] };
   
-    server.respondWith("GET", `${testApi}/services`,
+    server.respondWith("GET", `${config.api}/services`,
             [200, { "Content-Type": "application/json" },
-            JSON.stringify(testServices)]);
-    
-    agent.loadServices()
+            JSON.stringify(services)]);
+
+    agent.getServices()
     .then(() => {
       assert(agent);
       done();
@@ -40,16 +45,15 @@ describe("agent",  () => {
     server.respond()
   });
 
-  it("loads data sources", () => {
-    const agent = new Agent(testUrl, testApi, testCodebase);
-    const testDataSources = { dataSources : [{ url : "/testdatasource", key_id : "visitor_id" }] };
+  it("get data source list", (done) => {
+    const agent = new Agent(config, url, user);
+    const dataSources = { dataSources : [{ url : "/testdatasource", key_id : "visitor_id" }] };
 
-
-    server.respondWith("GET", `${testApi}/dataSources`,
+    server.respondWith("GET", `${config.api}/dataSources`,
             [200, { "Content-Type": "application/json" },
-            JSON.stringify(testDataSources)]);
+            JSON.stringify(dataSources)]);
     
-    agent.loadDataSources()
+    agent._getDataSourceList()
     .then(() => {
       assert(agent);
       done();
@@ -61,19 +65,16 @@ describe("agent",  () => {
     server.respond()
   });
 
-  it("loads a data source", () => {
-    const agent = new Agent(testUrl, testApi, testCodebase);
-    agent.setUser({ visitor_id : "testuser" });
-
-    const testDataSource = { url : "/testdatasource", key_id : "visitor_id" };
-    const testUser = { visitor_id : "testuser" };
-    const testParams = { age : 20, sex : 0 };
+  it("get data", (done) => {
+    const agent = new Agent(config, url, user);
+    const dataSource = { name : "test", url : "/testdatasource", key_id : "visitor_id" };
+    const params = { age : 20, sex : 0 };
     
-    server.respondWith("GET", `${testDataSource.url}?${testDataSource.key_id}=${testUser[testDataSource.key_id]}`,
+    server.respondWith("GET", `${dataSource.url}?${dataSource.key_id}=${agent.user[dataSource.key_id]}`,
             [200, { "Content-Type": "application/json" },
-            JSON.stringify(testParams)]);
+            JSON.stringify(params)]);
     
-    agent.loadDataSource(testDataSource)
+    agent._getData(dataSource)
     .then(() => {
       assert(agent);
       done();
@@ -83,5 +84,26 @@ describe("agent",  () => {
       done();
     });
     server.respond()
+  });
+
+  it("renders service", () => {
+    const user = {
+      data : {
+        age : 20,
+        sex : 0
+      }
+    };
+    const agent = new Agent(config, url, user);
+    const service = { id : "testservice" };
+    const renderService = function(){
+      assert.deepEqual(this.user.data, { age : 20, sex : 0 });
+    }
+    
+    agent.services = [service];
+    agent.exportRender();
+
+    const render = window[`__gizmo_render_${config.env}__`];
+    assert(render);
+    render();
   });
 });

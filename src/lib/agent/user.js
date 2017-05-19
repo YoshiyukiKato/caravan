@@ -1,12 +1,21 @@
 export default class User{
   constructor(ids){
-    for(id in this.supportedIDs){
-      this[id] = ids[id];
-    }
-  }
-  
-  get supportedIDs(){
-    return ["visitor_id"]; //サポートしてるid
+    this.props = {};
+    this.state = {};
   }
 
+  loadProps(){
+    $.ajax({
+
+    });
+  }
+
+  //ooをclickしたら...xxをclickしたら...
+  //=> itemごとのカスタムトリガ。stateではない
+  //=> どこでトリガを引くか -> trigger managerをつくる
+  //=> triger managerは、トリガ名とイベントの列を持つ
+
+  setState(){
+
+  }
 }

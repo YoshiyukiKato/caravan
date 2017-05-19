@@ -1,7 +1,7 @@
 import Promise from "bluebird";
 import $ from "jquery"; //jqueryはexternalにしてビルドする
 import User from "./user";
-import Service from "./service";
+import Item from "./item";
 
 export default class Agent{
   constructor({ env, api, codebase }, url=""){
@@ -9,46 +9,46 @@ export default class Agent{
     this.api = api; //api-gatewayのurl
     this.codebase = codebase; //s3のurl
     this.url = url; //サイトのurl
-    this.services = [];
+    this.items = [];
     this.user = null;
   }
 
   init(){
     this.exportProvide();
-    const servicesPromise = this.getServices();
+    const itemsPromise = this.getItems();
     const userDataPromise = this.getUserData();
-    Promise.all([userDataPromise, servicesPromise])
+    Promise.all([userDataPromise, itemsPromise])
     .then((result) => {
       this.user = result[1];
-      this.services = result[0];
-      this.services.forEach((service) => {
-        service.load(this.codebase);
+      this.items = result[0];
+      this.items.forEach((item) => {
+        item.load(this.codebase);
       });
     });
   }
 
-  //サービスのリストを全部取ってきて、URLのパターンで絞り込む
-  getServices(){
+  //itemsのリストを全部取ってきて、URLのパターンで絞り込む
+  getItems(){
     return new Promise((resolve, reject) => {
       $.ajax({
         type : "GET",
-        url : `${this.api}/services`,
+        url : `${this.api}/gizmo-items`,
         dataType : "json",
-        success : (res) => { resolve(res.services); },
+        success : (res) => { resolve(res.items); },
         error : (err) => { reject(new Error(err.message)); }
       });
     })
-    .filter((service) => {
+    .filter((item) => {
       //パターンが未定義なら除外
-      if(!service.pattern) return false;
+      if(!item.pattern) return false;
       //urlにマッチするサービスのみ抽出
       const regexp = new RegExp(pattern);
       return !!this.url.match(regexp);
     })
-    .reduce((services, service) => {
+    .reduce((items, item) => {
       //idで引けるようにして
-      services[service.id] = new Service(service);
-      return services;
+      items[item.id] = new Item(item);
+      return items;
     }, []);
   }
 
@@ -69,7 +69,7 @@ export default class Agent{
     return new Promise((resolve, reject) => {
       $.ajax({
         type : "GET",
-        url : `${this.api}/data_sources`,
+        url : `${this.api}/data-apis`,
         dataType : "json",
         success : (res) => { resolve(res.dataSources); },
         error : (err) => { reject(new Error(err.message)); }
@@ -96,11 +96,11 @@ export default class Agent{
   }
 
   exportProvide(){
-    window[`__gizmo_provide_${this.env}__`] = this.provideService.bind(this);
+    window[`__gizmo_provide_${this.env}__`] = this.provideItem.bind(this);
   }
 
-  provideService(id, adapt, render){
-    const service = this.services[id];
-    if(!!service) service.init(this.user, adapt, render);
+  provideItem(id, adapt, render){
+    const item = this.items[id];
+    if(!!item) item.init(this.user, adapt, render);
   }
 }

@@ -1,7 +1,15 @@
+const GizmoAPI = "";
+
 export default class User{
   constructor(ids){
     this.props = {};
     this.state = {};
+  }
+
+  getPropsList(){
+    $.ajax({
+      
+    });
   }
 
   loadProps(){

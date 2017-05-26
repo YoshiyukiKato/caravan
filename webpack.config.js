@@ -25,7 +25,7 @@ module.exports = {
   ],
 
   entry : {
-    "index" : ["./src/index.jsx", "./src/style.scss"],
+    "user-state" : ["./src/lib/user-state.js"],
   },
 
   output: {

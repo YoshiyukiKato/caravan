@@ -25,7 +25,7 @@ module.exports = {
   ],
 
   entry : {
-    "user-state" : ["./src/lib/user-state.js"],
+    "data-client" : ["./src/ts/data-client"],
   },
 
   output: {
@@ -38,7 +38,7 @@ module.exports = {
   target: "web",
 
   resolve: {
-    extensions: ['.js', '.jsx'],
+    extensions: ['.ts', '.tsx', '.js', '.jsx'],
   },
   
   devtool : 'inline-source-map',
@@ -55,12 +55,20 @@ module.exports = {
         test: /\.(js|jsx)?$/,
         loader : 'babel-loader',
         exclude : /node_modules/,
-        include : __dirname + "/src"
+        include : __dirname + "/src/js"
       },
+      
+      {
+        test: /\.(ts|tsx)?$/,
+        loader : 'awesome-typescript-loader',
+        exclude : /node_modules/,
+        include : __dirname + "/src/ts"
+      },
+      
       {
         test : /\.scss$/,
         loaders : ["style-loader", "css-loader", "sass-loader"],
-        include : __dirname + "/src"
+        include : __dirname + "/src/scss"
       }
     ]
   }

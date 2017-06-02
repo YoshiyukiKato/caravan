@@ -1,4 +1,4 @@
-import Agent from "../src/lib/agent";
+import Agent from "../src/js/agent";
 import assert from "power-assert";
 
 const config = {

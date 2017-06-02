@@ -12,7 +12,7 @@ module.exports = function(config) {
     files: [
       'test/fixtures/*.html',
       'test/fixtures/bower_components/jquery/dist/jquery.min.js',
-      'test/**/*.test.js'
+      'test/ts/*.test.ts'
     ],
 
     //webpack : require("./karma.webpack.config"),
@@ -21,6 +21,10 @@ module.exports = function(config) {
     exclude: [
       '**/*.swp'
     ],
+
+    mime: {
+      'text/x-typescript': ['ts', 'tsx']
+    },
 
     plugins : [
       'karma-chrome-launcher',
@@ -40,9 +44,16 @@ module.exports = function(config) {
       module : {
         //noParse : /jquery/,
         loaders: [
-          {
-            test: /\.js?$/,
+          /*{
+            test: /\.js|\.jsx$/,
             loader : 'babel-loader',
+            //include : __dirname + "/src/js",
+            exclude : /node_modules/
+          },*/
+          {
+            test: /\.tsx?$/,
+            loader : 'awesome-typescript-loader',
+            //include : __dirname + "/src/ts",
             exclude : /node_modules/
           },
         ]
@@ -55,7 +66,7 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      'test/**/*.test.js' : ['webpack', 'sourcemap'],
+      'test/ts/**/*.test.ts' : ['webpack', 'sourcemap'],
       //'test/fixtures/*.html': ['html2js']
     },
 

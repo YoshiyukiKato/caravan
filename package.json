@@ -1,6 +1,6 @@
 {
-  "name": "react-filecrud",
-  "version": "1.0.0",
+  "name": "web-lib",
+  "version": "0.0.1",
   "description": "crud client for remote filetree",
   "main": "index.js",
   "author": "Yoshiyuki Kato",
@@ -9,11 +9,17 @@
     "watch": "$(npm bin)/webpack --config webpack.config.js --watch --debug",
     "build": "$(npm bin)/webpack --config webpack.config.js",
     "start": "$(npm bin)/webpack-dev-server --config webpack.config.js",
-    "test": "$(npm bin)/karma start karma.conf.js"
+    "test": "$(npm bin)/karma start karma.conf.js",
+    "tstest": "$(npm bin)/mocha --compilers ts:espower-typescript/guess test/ts/**/*.test.ts"
   },
   "devDependencies": {
     "@types/bluebird": "^3.5.4",
     "@types/jquery": "^2.0.45",
+    "@types/jsdom": "^2.0.31",
+    "@types/mocha": "^2.2.41",
+    "@types/power-assert": "^1.4.29",
+    "@types/sinon": "^2.2.2",
+    "awesome-typescript-loader": "^3.1.3",
     "babel-core": "^6.24.0",
     "babel-loader": "^6.4.1",
     "babel-polyfill": "^6.23.0",
@@ -22,6 +28,8 @@
     "babel-preset-react": "^6.23.0",
     "babel-register": "^6.24.1",
     "css-loader": "^0.28.0",
+    "espower-typescript": "^8.0.0",
+    "istanbul": "^0.4.5",
     "jsdom": "^9.12.0",
     "karma": "^1.6.0",
     "karma-chrome-launcher": "^2.0.0",
@@ -36,9 +44,11 @@
     "mocha-sinon": "^2.0.0",
     "node-sass": "^4.5.2",
     "power-assert": "^1.4.2",
+    "remap-istanbul": "^0.9.5",
     "sass-loader": "^6.0.3",
     "sinon": "^2.1.0",
     "style-loader": "^0.16.1",
+    "ts-loader": "^2.1.0",
     "typescript": "^2.3.4",
     "webpack": "^2.2.1",
     "webpack-dev-server": "^2.4.1"

@@ -1,14 +1,14 @@
 import DataClient from "./data-client";
 
-class CBO extends DataClient{
-	constructor(){
-		super();
+export default class CBO extends DataClient{
+	endpoint: string;
+	constructor(endpoint){
+		this.endpoint = endpoint;
 	}
 
-	load(){
-		const visitorId = $("#se_id").attr("content");
+	load(visitorId){
 		if(!visitorId) return;
-		const reqUrl = `https://dccvn6mpyh.execute-api.ap-northeast-1.amazonaws.com/dev/hat?visitor_id=${visitorId}`;
+		const reqUrl = `${this.endpoint}?visitor_id=${visitorId}`;
 		return this._load(reqUrl);
 	}
 
@@ -17,15 +17,14 @@ class CBO extends DataClient{
 			throw new Error("no_data"); //データなし
 		}
 
-		let now = new Date();
+		/*let now = new Date();
 		if(now.getTime() - loadStartAt.getTime() > 1000){
 			throw new Error("timeout");//時間制限超過
-		}
+		}*/
 		return data.property;
 	}
 	
 	onError(err){
-		console.log(err);
-		return {};
+		throw err;
 	}
 }

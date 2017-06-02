@@ -1,9 +1,8 @@
-import Promise from "bluebird";
-import $ from "jquery";
+import * as Promise from "bluebird";
 
 export default abstract class DataClient {
-	abstract load(): void;
-	_load(reqUrl): Promise<Object> {
+	abstract load(visitorId: string): void;
+	_load(reqUrl: string): Promise<Object> {
 		const loadStartedAt = new Date();
 		return new Promise((resolve, reject) => {
 			$.ajax({
@@ -19,5 +18,5 @@ export default abstract class DataClient {
 	}
 	
 	abstract onLoad(loadStartedAt:Date, data:Object): Promise<Object>;
-	abstract onError(Error);
+	abstract onError(err:Error):never;
 }

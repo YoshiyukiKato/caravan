@@ -2,7 +2,8 @@ import DataClient from "./data-client";
 
 export default class CBO extends DataClient{
 	endpoint: string;
-	constructor(endpoint){
+	constructor(endpoint:string){
+		super();
 		this.endpoint = endpoint;
 	}
 

@@ -1,5 +1,4 @@
 import * as Promise from "bluebird";
-import {CBO} from "../data-client";
 
 export default class User{
   state: any;
@@ -14,7 +13,7 @@ export default class User{
   setState(nextState:Object){
     this.state = Object.assign(this.state, nextState);
     Promise.resolve(this.handleChangeStateFuncs)
-    .map((func) => func(state))
+    .map((func:Function) => func(this.state))
     .then(console.log)
     .catch(console.error);
   }  

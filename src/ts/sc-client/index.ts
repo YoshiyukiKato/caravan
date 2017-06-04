@@ -1,7 +1,7 @@
 export default class SC{
   s_gi: Function;
   s_account: any;
-  constructor(s_gi, s_account){
+  constructor(s_gi:Function, s_account:any){
     this.s_gi = s_gi;
     this.s_account = s_account;
   }

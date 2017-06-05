@@ -25,6 +25,7 @@ export default class GizmoItems{
 class GizmoItem{
   private id:string;
   private src:string;
+  public render:Function(user:User);
   constructor(item:{id:string, src:string}){
     this.id = item.id;
     this.src = item.src;
@@ -36,7 +37,7 @@ class GizmoItem{
     script.src = this.src;
   }
 
-  onChangeUser(user:User, render:Function){
-    render(user);
+  setRender(render:Function(user:User)){
+    this.render = render;
   }
 }

@@ -1,16 +1,26 @@
 import * as Promise from "bluebird";
+import API from "./api;
 
 export default class User{
   state: any;
   props: any;
+  api: API;
   handleChangeStateFuncs: Function[];
   
-  constructor(props){
-    this.props = props;
+  constructor(api:API){
+    this.api = api;
     this.handleChangeStateFuncs = [];
   }
 
-  setState(nextState:Object){
+  init():Promise<User>{
+    return this.api.user.load()
+    .then((props) => {
+      this.props = props;
+      return this;
+    });
+  }
+
+  setState(nextState:Object):void{
     this.state = Object.assign(this.state, nextState);
     Promise.resolve(this.handleChangeStateFuncs)
     .map((func:Function) => func(this.state))

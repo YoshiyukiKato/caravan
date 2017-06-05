@@ -1,18 +1,17 @@
-import DataClient from "./data-client";
+import * as http from "./http-client";
 
 
 //CBOとかはサービスによって違うので、個別実装する
-export default class CBO extends DataClient{
+export default class CBO{
 	endpoint: string;
 	constructor(endpoint:string){
-		super();
 		this.endpoint = endpoint;
 	}
 
 	load(visitorId){
 		if(!visitorId) return;
 		const reqUrl = `${this.endpoint}?visitor_id=${visitorId}`;
-		return this._load(reqUrl);
+		return http.get(reqUrl);
 	}
 
 	onLoad(loadStartAt, data){

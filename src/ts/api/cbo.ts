@@ -1,5 +1,7 @@
 import DataClient from "./data-client";
 
+
+//CBOとかはサービスによって違うので、個別実装する
 export default class CBO extends DataClient{
 	endpoint: string;
 	constructor(endpoint:string){
@@ -18,10 +20,6 @@ export default class CBO extends DataClient{
 			throw new Error("no_data"); //データなし
 		}
 
-		/*let now = new Date();
-		if(now.getTime() - loadStartAt.getTime() > 1000){
-			throw new Error("timeout");//時間制限超過
-		}*/
 		return data.property;
 	}
 	

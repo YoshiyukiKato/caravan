@@ -1,6 +1,6 @@
 import * as Promise from "bluebird";
-import User from "../user";
-import GizmoItems from "../gizmo-items";
+import User from "./user";
+import GizmoItems from "./gizmo-items";
 
 export default class App{
   isInitialized:boolean = false;
@@ -21,7 +21,7 @@ export default class App{
     Promise.all([gizmoItemsPromise, userPromise])
     .then(() => {
       this.isInitialized = true;
-      this.gizmoItems.renderAll(this.user)
+      this.gizmoItems.renderAll(this.user);
     });
   }
 }

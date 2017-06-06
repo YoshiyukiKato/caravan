@@ -1,6 +1,12 @@
-import Promise from "bluebird";
+import * as Promise from "bluebird";
 import User from "./user";
 import API from "./api";
+
+declare global {
+    interface Window {
+        __import_gizmo_item__?: () => void;
+    }
+}
 
 export default class GizmoItems{
   private itemMap: Map<string, GizmoItem> = new Map<string, GizmoItem>();
@@ -14,36 +20,36 @@ export default class GizmoItems{
 
   create(item:{id:string, src:string}){
     const newItem = new GizmoItem(item);
-    this.itemMap[item.id] = newItem;
+    this.itemMap.set(item.id, newItem);
     this.itemList.push(newItem);
     return newItem;
   }
 
   init():Promise<GizmoItems>{
-    const loadPromises = this.api.gizmoItems.load() //apiからリストを取り寄せ
-    .then(({gizmoItems}) => gizmoItems) //中身をとりだし
-    .map((item:{id:string, src:string}) => this.create(item)); //全て登録
+    const loadPromises = this.api.gizmoItem.load() //apiからリストを取り寄せ
+    .then(({gizmoItems}) => gizmoItems)
+    .map((item:{id:string, src:string}) => this.create(item));
     
     return Promise.all(loadPromises)
     .map((gizmoItem:GizmoItem) => gizmoItem.loadScript)
     .then(() => this);
   }
 
-  import(id, render):void{
-    const gizmoItem = this.itemMap[id];
-    gizmoItem.setRender(render.bind(gizmoItem));
+  import(id:string, render:Function):void{
+    const gizmoItem = this.itemMap.get(id);
+    if(gizmoItem) gizmoItem.setRender(render.bind(gizmoItem));
   }
 
   private exposeImport():void{
-    window["__import_gizmo_item__"] = this.import.bind(this);
+    window.__import_gizmo_item__ = this.import.bind(this);
   }
 
   all():GizmoItem[]{
     return this.itemList;
   }
 
-  find(id:string):GizmoItem{
-    return this.itemMap[id];
+  find(id:string):GizmoItem | undefined{
+    return this.itemMap.get(id);
   }
 
   renderAll(user:User):Promise<any>{
@@ -67,7 +73,8 @@ class GizmoItem{
     const script = document.createElement("script");
     script.id = this.id;
     script.src = this.src;
-    document.querySelector("body").appendChild(script);
+    
+    document.body.appendChild(script);
     this.isScriptLoaded = true;
     //ここで読み込むソースの中に、__init_gizmo_item__("id", () => {})がある
   }

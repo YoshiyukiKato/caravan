@@ -1,7 +1,8 @@
 import "./browser.env";
 import * as mocha from "mocha";
 import * as assert from "power-assert";
-import {CBO} from "../../src/ts/data-client";
+import API from "../../src/ts/api";
+
 
 function createFakeServer(url, responseObj){
   const server = sinon.fakeServer.create();

@@ -27,7 +27,7 @@ export default class GizmoItems{
 
   init():Promise<GizmoItems>{
     const loadPromises = this.api.gizmoItem.load() //apiからリストを取り寄せ
-    .then(({gizmoItems}) => gizmoItems)
+    .then(({items}) => items)
     .map((item:{id:string, src:string}) => this.create(item));
     
     return Promise.all(loadPromises)

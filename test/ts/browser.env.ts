@@ -1,6 +1,25 @@
 //common
 import {jsdom} from "jsdom";
 import * as jquery from "jquery";
+
+declare global{
+  interface Window{
+    XMLHttpRequest:XMLHttpRequest;
+  }
+  
+  namespace NodeJS{
+    interface Global {
+      jsdom?: any;
+      sinon?: any;
+      $?:JQuery;
+      document?: Document;
+      window?:Window;
+      XMLHttpRequest?:XMLHttpRequest;
+      navigator?:Navigator;
+    }
+  }
+}
+
 global.jsdom = jsdom;
 global.document = global.jsdom('<!doctype html><html><body></body></html>');
 global.window = global.document.defaultView;

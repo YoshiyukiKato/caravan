@@ -1,11 +1,11 @@
 import * as Promise from "bluebird";
 import User from "./user";
-import API from "./api";
+import {API} from "./api";
 
 declare global {
-    interface Window {
-        __import_gizmo_item__?: () => void;
-    }
+  interface Window {
+    __import_gizmo_item__?: () => void;
+  }
 }
 
 export default class GizmoItems{

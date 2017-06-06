@@ -1,8 +1,7 @@
 import * as Promise from "bluebird";
 import * as util from "./util";
 
-export default abstract class API{
-  util:Object = util;
+abstract class API{
   abstract user:{
     load:() => Promise<any>
   }
@@ -11,3 +10,5 @@ export default abstract class API{
     load:() => Promise<{gizmoItems:{id:string, src:string}[]}>
   }
 }
+
+export {API, util};

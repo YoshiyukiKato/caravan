@@ -1,5 +1,5 @@
 import * as Promise from "bluebird";
-import API from "./api";
+import {API} from "./api";
 
 export default class User{
   state: any;

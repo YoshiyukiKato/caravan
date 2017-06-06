@@ -1,11 +1,22 @@
+import * as Promise from "bluebird";
 import "./browser.env";
 import * as mocha from "mocha";
 import * as assert from "power-assert";
-import API from "../../src/ts/api";
+import {API,util} from "../../src/ts/api";
 
+class TestAPI extends API{
+  user = {
+    load: () => { return Promise.resolve({}); }
+  }
+
+  gizmoItem = {
+    load: () => { return Promise.resolve({gizmoItems:[]}); }
+  }
+}
+const testApi = new TestAPI();
 
 function createFakeServer(url, responseObj){
-  const server = sinon.fakeServer.create();
+  const server = global.sinon.fakeServer.create();
   server.respondWith("GET", url,
     [200, { "Content-Type": "application/json" }, JSON.stringify(responseObj)]);
   return server;
@@ -15,7 +26,7 @@ describe("data client", () => {
   describe("cbo", () => {
     const endpoint = "cbo";
     it("CBOクライアントの生成", () => {
-      const cbo = new CBO(endpoint);
+      const cbo = new util.CBO(endpoint);
       assert(cbo);
     });
 
@@ -34,7 +45,7 @@ describe("data client", () => {
       }
 
       const server = createFakeServer(url, response);
-      const cbo = new CBO(endpoint);
+      const cbo = new util.CBO(endpoint);
       cbo.load(visitorId)
       .then((property) => {
         assert(property);
@@ -55,7 +66,7 @@ describe("data client", () => {
       }
 
       const server = createFakeServer(url, response);
-      const cbo = new CBO(endpoint);
+      const cbo = new util.CBO(endpoint);
       cbo.load(visitorId)
       .then((property) => {
         throw new Error("エラーになるべき")

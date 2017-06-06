@@ -25,7 +25,8 @@ module.exports = {
   ],
 
   entry : {
-    "data-client" : ["./src/ts/data-client"],
+    "index" : ["./src/ts/index"],
+    "web" : ["./src/ts/web"],
   },
 
   output: {
@@ -60,7 +61,7 @@ module.exports = {
       
       {
         test: /\.(ts|tsx)?$/,
-        loader : 'awesome-typescript-loader',
+        loader : ['ts-loader'],
         exclude : /node_modules/,
         include : __dirname + "/src/ts"
       },

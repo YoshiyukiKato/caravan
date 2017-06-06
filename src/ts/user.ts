@@ -1,5 +1,5 @@
 import * as Promise from "bluebird";
-import API from "./api;
+import API from "./api";
 
 export default class User{
   state: any;
@@ -17,7 +17,7 @@ export default class User{
     .then((props) => {
       this.props = props;
       return this;
-    });
+    })
   }
 
   setState(nextState:Object):void{
@@ -28,7 +28,7 @@ export default class User{
     .catch(console.error);
   }  
 
-  onChangeState(cb): void{
+  onChangeState(cb:Function): void{
     this.handleChangeStateFuncs.push(cb);
   };
 }

@@ -1,4 +1,4 @@
-import interface from "./interface";
+import * as Promise from "bluebird";
 import * as util from "./util";
 
 export default abstract class API{

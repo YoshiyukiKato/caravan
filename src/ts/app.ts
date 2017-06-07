@@ -1,27 +1,28 @@
 import * as Promise from "bluebird";
 import User from "./user";
-import GizmoItems from "./gizmo-items";
+import Approaches from "./approaches";
+import {API} from "./api";
 
 export default class App{
   isInitialized:boolean = false;
   loadedAt:Date;
   user:User;
-  gizmoItems:GizmoItems;
+  approaches:Approaches;
 
-  constructor(user:User, gizmoItems:GizmoItems){
+  constructor(api:API){
     this.loadedAt = new Date();
-    this.user = user;
-    this.gizmoItems = gizmoItems;
+    this.user = new User(api);
+    this.approaches = new Approaches(api);
   }
 
   init():void{
     if(this.isInitialized) return;
-    const gizmoItemsPromise = this.gizmoItems.init();
+    const approachesPromise = this.approaches.init();
     const userPromise = this.user.init();
-    Promise.all([gizmoItemsPromise, userPromise])
+    Promise.all([approachesPromise, userPromise])
     .then(() => {
       this.isInitialized = true;
-      this.gizmoItems.renderAll(this.user);
+      this.approaches.renderAll(this.user);
     });
   }
 }

@@ -5947,7 +5947,7 @@ module.exports = g;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 const gizmo_items_1 = __webpack_require__(11);
-exports.GizmoItems = gizmo_items_1.default;
+exports.Approaches = gizmo_items_1.default;
 const user_1 = __webpack_require__(12);
 exports.User = user_1.default;
 const app_1 = __webpack_require__(10);
@@ -6278,21 +6278,21 @@ exports.http = http;
 Object.defineProperty(exports, "__esModule", { value: true });
 const Promise = __webpack_require__(0);
 class App {
-    constructor(user, gizmoItems) {
+    constructor(user, approaches) {
         this.isInitialized = false;
         this.loadedAt = new Date();
         this.user = user;
-        this.gizmoItems = gizmoItems;
+        this.approaches = approaches;
     }
     init() {
         if (this.isInitialized)
             return;
-        const gizmoItemsPromise = this.gizmoItems.init();
+        const approachesPromise = this.approaches.init();
         const userPromise = this.user.init();
-        Promise.all([gizmoItemsPromise, userPromise])
+        Promise.all([approachesPromise, userPromise])
             .then(() => {
             this.isInitialized = true;
-            this.gizmoItems.renderAll(this.user);
+            this.approaches.renderAll(this.user);
         });
     }
 }
@@ -6307,7 +6307,7 @@ exports.default = App;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 const Promise = __webpack_require__(0);
-class GizmoItems {
+class Approaches {
     constructor(api) {
         this.itemMap = new Map();
         this.itemList = [];
@@ -6315,23 +6315,23 @@ class GizmoItems {
         this.api = api;
     }
     create(item) {
-        const newItem = new GizmoItem(item);
+        const newItem = new Approach(item);
         this.itemMap.set(item.id, newItem);
         this.itemList.push(newItem);
         return newItem;
     }
     init() {
-        const loadPromises = this.api.gizmoItem.load() //apiからリストを取り寄せ
+        const loadPromises = this.api.approach.load() //apiからリストを取り寄せ
             .then(({ items }) => items)
             .map((item) => this.create(item));
         return Promise.all(loadPromises)
-            .map((gizmoItem) => gizmoItem.loadScript)
+            .map((approach) => approach.loadScript)
             .then(() => this);
     }
     import(id, render) {
-        const gizmoItem = this.itemMap.get(id);
-        if (gizmoItem)
-            gizmoItem.setRender(render.bind(gizmoItem));
+        const approach = this.itemMap.get(id);
+        if (approach)
+            approach.setRender(render.bind(approach));
     }
     exposeImport() {
         window.__import_gizmo_item__ = this.import.bind(this);
@@ -6343,12 +6343,12 @@ class GizmoItems {
         return this.itemMap.get(id);
     }
     renderAll(user) {
-        const promises = this.itemList.map((GizmoItem) => GizmoItem.render(user));
+        const promises = this.itemList.map((Approach) => Approach.render(user));
         return Promise.all(promises).then((result) => result);
     }
 }
-exports.default = GizmoItems;
-class GizmoItem {
+exports.default = Approaches;
+class Approach {
     constructor(item) {
         this.isScriptLoaded = false;
         this.id = item.id;

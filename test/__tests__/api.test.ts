@@ -1,11 +1,11 @@
 import * as Promise from "bluebird";
-import "./browser.env";
-import * as mocha from "mocha";
-import * as assert from "power-assert";
 import {API,util} from "../../src/ts/api";
 
+import "./browser.env";
+import * as sinon from "sinon";
+sinon.useFakeXMLHttpRequest();
 function createFakeServer(url, responseObj, method="GET"){
-  const server = global.sinon.fakeServer.create();
+  const server = sinon.fakeServer.create();
   server.respondWith(method, url,
     [200, { "Content-Type": "application/json" }, JSON.stringify(responseObj)]);
   return server;
@@ -13,45 +13,47 @@ function createFakeServer(url, responseObj, method="GET"){
 
 describe("api", () => {
   describe("API", () => {
-    it("APIクライアントの定義", () => {
+    test("APIクライアントの定義", () => {
       class TestAPI extends API{
         user = {
           load: () => { return Promise.resolve({ name : "test" }); }
         }
         
-        gizmoItem = {
+        approach = {
           load: () => { return Promise.resolve({items:[{ id:"test", src:"/src/test" }]}); }
         }
       }
       
       const testApi = new TestAPI();
-      assert(testApi);
+      expect(testApi);
     });
   });
   
   describe("util", () => {
     describe("http-client", () => {
-      it("getする", () => {
+      test("getする", () => {
         const endpoint = "/get";
         const response = { message : "ok" };
         const server = createFakeServer(endpoint, response);
-        util.http.get(endpoint)
-        .then((response) => {
-          assert(response);
+        setTimeout(() => { server.respond() }, 10);
+        
+        return util.http.get(endpoint)
+        .then((res) => {
+          expect(res).toEqual(response);
         }).catch((err) => {
           throw err;
         });
       });
       
-      it("postする", () => {
+      test("postする", () => {
         const endpoint = "/post";
         const body = { message : "is ok?" };
         const response = { message : "ok" };
         const server = createFakeServer(endpoint, response, "POST");
-        
-        util.http.post(endpoint, body)
-        .then((response) => {
-          assert(response);
+        setTimeout(() => { server.respond() },10);
+        return util.http.post(endpoint, body)
+        .then((res) => {
+          expect(res).toEqual(response);
         }).catch((err) => {
           throw err;
         });
@@ -59,16 +61,16 @@ describe("api", () => {
     });
     
     describe("cbo", () => {
-    const endpoint = "/cbo";
-    const visitorId = "test";
-    let cbo;
+      const endpoint = "/cbo";
+      const visitorId = "test";
+      let cbo;
     
-      it("CBOクライアントの生成", () => {
+      test("CBOクライアントの生成", () => {
         cbo = new util.CBO(endpoint);
-        assert(cbo);
+        expect(cbo);
       });
 
-      it("正しいデータが返ってきたとき", () => {
+      test("正しいデータが返ってきたとき", () => {
         const url =`${endpoint}?visitor_id=${visitorId}`;
         const response = {
           status : true,
@@ -80,32 +82,31 @@ describe("api", () => {
           }
         }
         const server = createFakeServer(url, response);
-        
-        cbo.load(visitorId)
+        setTimeout(() => { server.respond() },10);
+        return cbo.load(visitorId)
         .then((property) => {
-          assert(property);
+          expect(property).toEqual(response.property);
         })
         .catch((err) => {
           throw err;
         });
-        server.respond();
       });
 
-      it("visitor idがなかったとき", () => {
+      test("visitor idがなかったとき", () => {
         const url =`${endpoint}?visitor_id=${visitorId}`;
         const response = {};
         const server = createFakeServer(url, response);
-        cbo.load(null)
+        setTimeout(() => { server.respond() },10);
+        return cbo.load(null)
         .then((property) => {
           throw new Error("エラーになるべき")
         })
         .catch((err) => {
-          assert(err);
+          expect(err);
         });
-        server.respond();
       });
 
-      it("データが欠けていたとき", () => {
+      test("データが欠けていたとき", () => {
         const url =`${endpoint}?visitor_id=${visitorId}`;
         const response = {
           status : true,
@@ -117,17 +118,17 @@ describe("api", () => {
         }
 
         const server = createFakeServer(url, response);
-        cbo.load(visitorId)
+        setTimeout(() => { server.respond() },10);
+        return cbo.load(visitorId)
         .then((property) => {
           throw new Error("エラーになるべき")
         })
         .catch((err) => {
-          assert(err);
+          expect(err);
         });
-        server.respond();
       });
 
-      it("データがなかったとき", () => {
+      test("データがなかったとき", () => {
         const response = {
           status : false,
           property : {}
@@ -135,14 +136,14 @@ describe("api", () => {
 
         const url =`${endpoint}?visitor_id=${visitorId}`;
         const server = createFakeServer(url, response);
-        cbo.load(visitorId)
+        setTimeout(() => { server.respond() },10);
+        return cbo.load(visitorId)
         .then((property) => {
           throw new Error("エラーになるべき")
         })
         .catch((err) => {
-          assert(err);
+          expect(err);
         });
-        server.respond();
       });
     });
   });

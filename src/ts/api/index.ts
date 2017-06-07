@@ -6,7 +6,7 @@ abstract class API{
     load:() => Promise<any>
   }
 
-  abstract gizmoItem:{
+  abstract approach:{
     load:() => Promise<{items:{id:string, src:string}[]}>
   }
 }

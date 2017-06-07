@@ -8,4 +8,12 @@ describe("approaches", () => {
     const approaches = new Approaches(testapi);
     expect(approaches);
   });
+
+  test("#create 新規Approachの作成", () => {
+    const config = {
+      id : "test",
+      src : "/src/test"
+    };
+    
+  });
 });

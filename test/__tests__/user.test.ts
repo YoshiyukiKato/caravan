@@ -4,7 +4,7 @@ import TestAPI from "./fixture/testapi";
 const testapi = new TestAPI();
 
 describe("user", () => {
-  describe("Userインスタンスの作成", () => {
+  test("#Userインスタンスの作成", () => {
     const user = new User(testapi);
     expect(user);
   });

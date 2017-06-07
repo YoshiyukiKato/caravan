@@ -1,6 +1,6 @@
 import * as Promise from "bluebird";
 import User from "./user";
-import Approaches from "./approaches";
+import {Approaches} from "./approach";
 import {API} from "./api";
 
 export default class App{

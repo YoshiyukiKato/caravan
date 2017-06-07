@@ -8,7 +8,7 @@ declare global {
   }
 }
 
-export default class Approaches{
+export class Approaches{
   private itemMap: Map<string, Approach> = new Map<string, Approach>();
   private itemList: Approach[] = [];
   private api:API;
@@ -58,7 +58,7 @@ export default class Approaches{
   }
 }
 
-class Approach{
+export class Approach{
   private isScriptLoaded:boolean = false;
   private id:string;
   private src:string;
@@ -68,14 +68,14 @@ class Approach{
     this.src = item.src;
   }
 
-  loadScript():void{
-    if(this.isScriptLoaded) return;
+  loadScript():boolean{
+    if(this.isScriptLoaded) return false;
     const script = document.createElement("script");
     script.id = this.id;
     script.src = this.src;
-    
     document.body.appendChild(script);
     this.isScriptLoaded = true;
+    return true;
     //ここで読み込むソースの中に、__init_gizmo_item__("id", () => {})がある
   }
 

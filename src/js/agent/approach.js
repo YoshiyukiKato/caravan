@@ -1,6 +1,6 @@
 import Stuff from "./stuff";
 
-export default class Service extends Stuff{
+export default class Approach extends Stuff{
   constructor(props){
     super(props);
   }

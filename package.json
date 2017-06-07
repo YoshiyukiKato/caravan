@@ -12,7 +12,8 @@
     "test": "$(npm bin)/karma start karma.conf.js",
     "tstest": "$(npm bin)/mocha --compilers ts:espower-typescript/guess test/ts/**/*.test.ts",
     "tstest-cov": "$(npm bin)/nyc $(npm bin)/mocha test/ts/**/*.test.ts",
-    "jest": "$(npm bin)/jest"
+    "jest": "$(npm bin)/jest --no-cache",
+    "jest-cov": "$(npm bin)/jest --coverage"
   },
   "nyc": {
     "include": [
@@ -39,10 +40,11 @@
       "js",
       "json"
     ],
+    "coveragePathIgnorePatterns": ["node_modules", "test\/__tests__\/(.+\/){0,}.+.ts"],
     "transform": {
-      "^.+\\.(ts|tsx)$": "<rootDir>/test/jest/espower-preprocessor.js"
+      "^.+\\.(ts|tsx)$": "<rootDir>/test/ts-preprocessor.js"
     },
-    "testRegex": "(/__tests__/)"
+    "testMatch": ["**/__tests__/**/*.test.ts?(x)"]
   },
   "devDependencies": {
     "@types/bluebird": "^3.5.4",

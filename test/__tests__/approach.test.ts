@@ -1,77 +1,124 @@
+import "./browser.env";
 import {Approaches, Approach} from "../../src/ts/approach";
 import User from "../../src/ts/user";
 import TestAPI from "./fixture/testapi";
+import * as assert from "power-assert";
 
 const testapi = new TestAPI();
 
-describe("Approach", () => {
+describe("approach", () => {
   describe("Approach クラス", () => {
     var approach;
-    test("Approachインスタンスの作成", () => {
+    it("Approachインスタンスの作成", () => {
       const config = {
         id : "test",
         src : "/src/test"
       };
       approach = new Approach(config);
-      expect(approach);
+      assert(approach);
     });
-  
-    test("renderメソッドの設定", () => {
-      const render = (user:User) => Promise.resolve(true);
-      approach.setRender(render);
-      expect(approach.render).toEqual(render);
+    
+    it("未設定のrenderメソッドを呼ぶとnullが返ってくる", () => {
+      approach.render().then((result) => {
+        assert(result === null);
+      });
     });
 
-    test("renderメソッドの実行", () => {
+    it("renderメソッドの設定", () => {
+      const render = (user:User) => Promise.resolve(true);
+      approach.setRender(render);
+      assert(approach.isRenderSetted === true);
+    });
+
+    it("renderメソッドの実行", () => {
       approach.render()
       .then((result) => {
-        expect(result).toBe(true);
+        assert(result === true);
       }).catch((err) => {
         throw err;
       });
     });
 
     describe("Approachのスクリプトの読み込み", () => {
-      test("スクリプトを読み込む(1回目)", () => {
-        const result = approach.loadScript()
-        expect(result).toBe(true);
+      it("スクリプトを読み込む(1回目)", () => {
+        const result = approach.loadScript();
+        assert(result === true);
       });
       
-      test("スクリプトを読み込む(2回目)", () => {
-        const result = approach.loadScript()
-        expect(result).toBe(false);
+      it("スクリプトを読み込む(2回目)", () => {
+        const result = approach.loadScript();
+        assert(result === false);
       });
     });
   });
  
 
   describe("Approaches クラス", () => {
-    test("Approachesインスタンスの作成", () => {
+    it("Approachesインスタンスの作成", () => {
       const approaches = new Approaches(testapi);
-      expect(approaches);
-      expect(window.__import_gizmo_item__);
+      assert(approaches);
+      assert(window.__import_gizmo_item__);
     });
     
+    it("ApproachesのデータをAPI経由で取得して、各インスタンスのloadScriptを呼び出す", () => {
+      const approaches = new Approaches(testapi);
+      approaches.init().then(() => {
+        const isAllLoaded = approaches.all().reduce((acc, approach) => acc && approach.isScriptLoaded);
+        assert(isAllLoaded === true);
+      })
+      .catch((err) => {
+        throw err;
+      });
+    });
+
     describe("Approachインスタンスの管理", () => {
       let approaches, approach;
-      test("Approachインスタンスの作成", () => {
+      it("Approachインスタンスの作成", () => {
         approaches = new Approaches(testapi);
         const config = {
           id : "test",
           src : "/src/test"
         };
         approach = approaches.create(config);
-        expect(approach).toBeInstanceOf(Approach);
+        assert(approach instanceof Approach === true);
       });
 
-      test("全Approachインスタンスの取得", () => {
+      it("全Approachインスタンスの取得", () => {
         const results = approaches.all();
-        expect(results).toEqual([approach]);
+        assert.deepEqual(results, [approach]);
       });
 
-      test("個別Approachインスタンスの取得", () => {
+      it("個別Approachインスタンスの取得", () => {
         const result = approaches.find("test");
-        expect(result).toEqual(approach);
+        assert.deepEqual(result, approach);
+      });
+      
+      it("Approachインスタンスに、renderメソッドをインポート", () => {
+        const render = (user:User) => Promise.resolve(true);
+        approaches.import("test", render);
+        return approaches.find("test").render()
+        .then((result) => {
+          assert(result === true);
+        })
+        .catch((err) => {
+          throw err;
+        });
+      });
+
+      it("存在しないApproachインスタンスに、renderメソッドをインポートしようとしてもエラーにはならない", () => {
+        const render = (user:User) => Promise.resolve(true);
+        approaches.import("not-exist", render);
+        assert(true);
+      });
+
+      it("全Approachインスタンスのrenderメソッド呼び出し", () => {
+        return approaches.renderAll()
+        .then((result) => {
+          assert.deepEqual(result, [true]);
+        })
+        .catch((err) => {
+          throw err;
+        });
       });
     });
   });

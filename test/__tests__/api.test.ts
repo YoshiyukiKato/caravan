@@ -1,5 +1,7 @@
+import "./browser.env";
 import * as Promise from "bluebird";
 import {API,util} from "../../src/ts/api";
+import * as assert from "power-assert";
 
 import "./browser.env";
 import * as sinon from "sinon";
@@ -13,7 +15,7 @@ function createFakeServer(url, responseObj, method="GET"){
 
 describe("api", () => {
   describe("API", () => {
-    test("APIクライアントの定義", () => {
+    it("APIクライアントの定義", () => {
       class TestAPI extends API{
         user = {
           load: () => { return Promise.resolve({ name : "test" }); }
@@ -25,13 +27,13 @@ describe("api", () => {
       }
       
       const testApi = new TestAPI();
-      expect(testApi);
+      assert(testApi);
     });
   });
   
   describe("util", () => {
     describe("http-client", () => {
-      test("getする", () => {
+      it("getする", () => {
         const endpoint = "/get";
         const response = { message : "ok" };
         const server = createFakeServer(endpoint, response);
@@ -39,13 +41,13 @@ describe("api", () => {
         
         return util.http.get(endpoint)
         .then((res) => {
-          expect(res).toEqual(response);
+          assert.deepEqual(res, response);
         }).catch((err) => {
           throw err;
         });
       });
       
-      test("postする", () => {
+      it("postする", () => {
         const endpoint = "/post";
         const body = { message : "is ok?" };
         const response = { message : "ok" };
@@ -53,7 +55,7 @@ describe("api", () => {
         setTimeout(() => { server.respond() },10);
         return util.http.post(endpoint, body)
         .then((res) => {
-          expect(res).toEqual(response);
+          assert.deepEqual(res, response);
         }).catch((err) => {
           throw err;
         });
@@ -65,12 +67,12 @@ describe("api", () => {
       const visitorId = "test";
       let cbo;
     
-      test("CBOクライアントの生成", () => {
+      it("CBOクライアントの生成", () => {
         cbo = new util.CBO(endpoint);
-        expect(cbo);
+        assert(cbo);
       });
 
-      test("正しいデータが返ってきたとき", () => {
+      it("正しいデータが返ってきたとき", () => {
         const url =`${endpoint}?visitor_id=${visitorId}`;
         const response = {
           status : true,
@@ -85,14 +87,14 @@ describe("api", () => {
         setTimeout(() => { server.respond() },10);
         return cbo.load(visitorId)
         .then((property) => {
-          expect(property).toEqual(response.property);
+          assert.deepEqual(property,response.property);
         })
         .catch((err) => {
           throw err;
         });
       });
 
-      test("visitor idがなかったとき", () => {
+      it("visitor idがなかったとき", () => {
         const url =`${endpoint}?visitor_id=${visitorId}`;
         const response = {};
         const server = createFakeServer(url, response);
@@ -102,11 +104,11 @@ describe("api", () => {
           throw new Error("エラーになるべき")
         })
         .catch((err) => {
-          expect(err);
+          assert(err);
         });
       });
 
-      test("データが欠けていたとき", () => {
+      it("データが欠けていたとき", () => {
         const url =`${endpoint}?visitor_id=${visitorId}`;
         const response = {
           status : true,
@@ -124,11 +126,11 @@ describe("api", () => {
           throw new Error("エラーになるべき")
         })
         .catch((err) => {
-          expect(err);
+          assert(err);
         });
       });
 
-      test("データがなかったとき", () => {
+      it("データがなかったとき", () => {
         const response = {
           status : false,
           property : {}
@@ -142,7 +144,7 @@ describe("api", () => {
           throw new Error("エラーになるべき")
         })
         .catch((err) => {
-          expect(err);
+          assert(err);
         });
       });
     });

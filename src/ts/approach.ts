@@ -26,13 +26,13 @@ export class Approaches{
   }
 
   init():Promise<Approaches>{
-    const loadPromises = this.api.approach.load() //apiからリストを取り寄せ
+    const promises = this.api.approach.load() //apiからリストを取り寄せ
     .then(({items}) => items)
-    .map((item:{id:string, src:string}) => this.create(item));
-    
-    return Promise.all(loadPromises)
-    .map((approach:Approach) => approach.loadScript)
-    .then(() => this);
+    .map((item:{id:string, src:string}) => this.create(item))
+    .map((approach:Approach) => approach.loadScript());
+
+    return Promise.all(promises)
+    .then((result) =>  this);
   }
 
   import(id:string, render:Function):void{
@@ -53,16 +53,17 @@ export class Approaches{
   }
 
   renderAll(user:User):Promise<any>{
-    const promises = this.itemList.map((Approach) => Approach.render(user));
+    const promises = this.itemList.map((approach) => approach.render(user));
     return Promise.all(promises).then((result) => result);
   }
 }
 
 export class Approach{
-  private isScriptLoaded:boolean = false;
-  private id:string;
-  private src:string;
-  public render:(user:User) => Promise<any>;
+  readonly isScriptLoaded:boolean = false;
+  readonly isRenderSetted:boolean = false;
+  readonly id:string;
+  readonly src:string;
+  private _render:(user:User) => Promise<any>;
   constructor(item:{id:string, src:string}){
     this.id = item.id;
     this.src = item.src;
@@ -70,16 +71,22 @@ export class Approach{
 
   loadScript():boolean{
     if(this.isScriptLoaded) return false;
-    const script = document.createElement("script");
+    const script = window.document.createElement("script");
     script.id = this.id;
     script.src = this.src;
-    document.body.appendChild(script);
+    window.document.body.appendChild(script);
     this.isScriptLoaded = true;
     return true;
     //ここで読み込むソースの中に、__init_gizmo_item__("id", () => {})がある
   }
 
-  setRender(render: (user:User) => Promise<any>):void{
-    this.render = render;
+  render(user:User):Promise<any>{
+    if(!this._render) return Promise.resolve(null);
+    return this._render(user);
+  }
+
+  setRender(_render: (user:User) => Promise<any>):boolean{
+    this._render = _render;
+    this.isRenderSetted = true;
   }
 }

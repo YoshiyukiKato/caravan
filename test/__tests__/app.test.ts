@@ -29,7 +29,7 @@ describe("app", () => {
     });
   });
 
-  it("init（2回目）", () => {
+  it("init（2回目）は実行されない", () => {
     const cbs = app.approaches.all().map((approach) => {
       const cb = sinon.spy();
       approach.setRender(cb);

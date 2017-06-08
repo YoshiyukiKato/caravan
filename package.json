@@ -28,7 +28,7 @@
       "espower-typescript/guess"
     ],
     "reporter": [
-      "text"
+      "text", "html"
     ],
     "sourceMap": true,
     "instrument": true

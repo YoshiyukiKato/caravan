@@ -1,39 +1,23 @@
 const path = require('path');
 const webpack = require('webpack');
+const WebpackIconvPlugin = require('webpack-iconv-plugin');
 
-const DEBUG = !process.argv.includes('--release');
 const VERBOSE = process.argv.includes('--verbose');
 
 module.exports = {
-  cache: DEBUG,
-
-  stats: {
-    colors: true,
-    reasons: DEBUG,
-    hash: VERBOSE,
-    version: VERBOSE,
-    timings: true,
-    chunks: VERBOSE,
-    chunkModules: VERBOSE,
-    cached: VERBOSE,
-    cachedAssets: VERBOSE,
-  },
-
-  plugins: [
-    //new webpack.optimize.UglifyJsPlugin({ compress: { screw_ie8: true, warnings: VERBOSE } }),
-    new webpack.optimize.AggressiveMergingPlugin(),
-  ],
-
+  plugins: [new webpack.optimize.AggressiveMergingPlugin()],
+  
   entry : {
-    "index" : ["./src/ts/index"],
-    "web" : ["./src/ts/web"],
+    "index" : ["./src/index"],
+    "web" : ["./src/web"],
   },
 
   output: {
     publicPath: '/',
     sourcePrefix: '',
-    path: __dirname + '/dest',
+    path: __dirname + "/dest/",
     filename: '[name].js',
+    libraryTarget: "umd"
   },
 
   target: "web",
@@ -61,9 +45,9 @@ module.exports = {
       
       {
         test: /\.(ts|tsx)?$/,
-        loader : ['ts-loader'],
+        loader : "ts-loader",
         exclude : /node_modules/,
-        include : __dirname + "/src/ts"
+        include : __dirname + "/src"
       },
       
       {

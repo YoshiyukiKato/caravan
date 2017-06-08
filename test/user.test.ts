@@ -1,5 +1,5 @@
-import "./browser.env";
-import User from "../../src/ts/user";
+import "./util/browser.env";
+import User from "../src/user";
 import TestAPI from "./fixture/testapi";
 import * as assert from "power-assert";
 

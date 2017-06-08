@@ -1,5 +1,5 @@
 import * as Promise from "bluebird";
-import {API,util} from "../../../src/ts/api";
+import {API,util} from "../../src/api";
 
 const testUser = {
   name : "test",

@@ -1,10 +1,10 @@
-import "./browser.env";
 import * as Promise from "bluebird";
-import {API,util} from "../../src/ts/api";
+import {API,util} from "../src/api";
 import * as assert from "power-assert";
 
-import "./browser.env";
+import "./util/browser.env";
 import * as sinon from "sinon";
+
 sinon.useFakeXMLHttpRequest();
 function createFakeServer(url, responseObj, method="GET"){
   const server = sinon.fakeServer.create();

@@ -59,8 +59,8 @@ export class Approaches{
 }
 
 export class Approach{
-  readonly isScriptLoaded:boolean = false;
-  readonly isRenderSetted:boolean = false;
+  public isScriptLoaded:boolean = false;
+  public isRenderSetted:boolean = false;
   readonly id:string;
   readonly src:string;
   private _render:(user:User) => Promise<any>;
@@ -85,7 +85,7 @@ export class Approach{
     return this._render(user);
   }
 
-  setRender(_render: (user:User) => Promise<any>):boolean{
+  setRender(_render: (user:User) => Promise<any>):void{
     this._render = _render;
     this.isRenderSetted = true;
   }

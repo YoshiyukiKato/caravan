@@ -1,6 +1,6 @@
-import "./browser.env";
-import {Approaches, Approach} from "../../src/ts/approach";
-import User from "../../src/ts/user";
+import "./util/browser.env";
+import {Approaches, Approach} from "../src/approach";
+import User from "../src/user";
 import TestAPI from "./fixture/testapi";
 import * as assert from "power-assert";
 

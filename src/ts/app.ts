@@ -15,14 +15,15 @@ export default class App{
     this.approaches = new Approaches(api);
   }
 
-  init():void{
-    if(this.isInitialized) return;
+  init():Promise<App>{
+    if(this.isInitialized) return Promise.resolve(this);
     const approachesPromise = this.approaches.init();
     const userPromise = this.user.init();
-    Promise.all([approachesPromise, userPromise])
+    return Promise.all([approachesPromise, userPromise])
     .then(() => {
       this.isInitialized = true;
       this.approaches.renderAll(this.user);
+      return this;
     });
   }
 }

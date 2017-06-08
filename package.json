@@ -11,9 +11,9 @@
     "start": "$(npm bin)/webpack-dev-server --config webpack.config.js",
     "test": "$(npm bin)/karma start karma.conf.js",
     "tstest": "$(npm bin)/mocha --compilers ts:espower-typescript/guess test/ts/**/*.test.ts",
-    "tstest-cov": "$(npm bin)/nyc $(npm bin)/mocha test/ts/**/*.test.ts",
+    "tstest-cov": "$(npm bin)/nyc $(npm bin)/mocha test/__tests__/*.test.ts",
     "jest": "$(npm bin)/jest --no-cache",
-    "jest-cov": "$(npm bin)/jest --coverage"
+    "jest-cov": "$(npm bin)/jest --coverage --no-cache"
   },
   "nyc": {
     "include": [

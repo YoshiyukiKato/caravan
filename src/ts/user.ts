@@ -2,31 +2,29 @@ import * as Promise from "bluebird";
 import {API} from "./api";
 
 export default class User{
-  state: any;
-  props: any;
-  api: API;
-  handleChangeStateFuncs: Function[];
+  public state: any = { isInitialized : false };
+  public props: any = {};
+  public handleChangeStateFuncs: Function[] = [];
+  private api: API;
   
   constructor(api:API){
     this.api = api;
-    this.handleChangeStateFuncs = [];
   }
 
   init():Promise<User>{
     return this.api.user.load()
     .then((props) => {
       this.props = props;
-      return this;
-    })
+      return this.setState({ isInitialized : true });
+    });
   }
 
-  setState(nextState:Object):void{
+  setState(nextState:Object):Promise<User>{
     this.state = Object.assign(this.state, nextState);
-    Promise.resolve(this.handleChangeStateFuncs)
+    return Promise.resolve(this.handleChangeStateFuncs)
     .map((func:Function) => func(this.state))
-    .then(console.log)
-    .catch(console.error);
-  }  
+    .then(() => this);
+  }
 
   onChangeState(cb:Function): void{
     this.handleChangeStateFuncs.push(cb);

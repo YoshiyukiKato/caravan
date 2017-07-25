@@ -36,7 +36,7 @@ export class Approaches{
   }
 
   import(id:string, render:Function):void{
-    const approach = this.itemMap.get(id);
+    const approach = this.itemMap.get(id); //api経由で引いてくるのは後。とりあえず汎用化が先
     if(approach) approach.setRender(render.bind(approach));
   }
 

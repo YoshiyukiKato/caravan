@@ -1,32 +1,29 @@
 import * as Promise from "bluebird";
-import {API} from "./api";
+
+type handleChangeFunc = (user:User) => any
 
 export default class User{
   public state: any = { isInitialized : false };
   public props: any = {};
-  public handleChangeStateFuncs: Function[] = [];
-  private api: API;
+  public handleChangeFuncs: handleChangeFunc[] = [];
   
-  constructor(api:API){
-    this.api = api;
-  }
+  constructor(){}
 
-  init():Promise<User>{
-    return this.api.user.load()
-    .then((props) => {
-      this.props = props;
-      return this.setState({ isInitialized : true });
-    });
-  }
-
-  setState(nextState:Object):Promise<User>{
-    this.state = Object.assign(this.state, nextState);
-    return Promise.resolve(this.handleChangeStateFuncs)
-    .map((func:Function) => func(this.state))
+  setProps(nextProps:any):Promise<User>{
+    this.props = Object.assign(this.props, nextProps);
+    return Promise.resolve(this.handleChangeFuncs)
+    .map((func:handleChangeFunc) => func(this.state))
     .then(() => this);
   }
 
-  onChangeState(cb:Function): void{
-    this.handleChangeStateFuncs.push(cb);
+  setState(nextState:any):Promise<User>{
+    this.state = Object.assign(this.state, nextState);
+    return Promise.resolve(this.handleChangeFuncs)
+    .map((func:handleChangeFunc) => func(this))
+    .then(() => this);
+  }
+
+  onChange(cb:handleChangeFunc):void{
+    this.handleChangeFuncs.push(cb);
   };
 }

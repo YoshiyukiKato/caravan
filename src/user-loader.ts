@@ -1,4 +1,4 @@
-import Promise from "bluebird";
+import * as Promise from "bluebird";
 
 export default abstract class UserLoader{
   abstract load():Promise<any>

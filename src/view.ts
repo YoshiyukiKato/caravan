@@ -1,13 +1,10 @@
-import Promise from "bluebird";
+import * as Promise from "bluebird";
 import User from "./user";
 
-
 type renderFunc = (user:any) => any;
-type handleImportFunc = (component:Component) => any
 
 export default class View{
-  private components:Component[];
-  private handleImportFuncs:handleImportFunc[]
+  private components:Component[] = [];
   private props:any = { user : null };
   private state:any = { renderCount : 0 };
 
@@ -30,7 +27,9 @@ export default class View{
    */
   render(user:any){
     this.props.user = user;
-    const renderPromise = this.components.map((component:Component) => component.render(user));
+    const renderPromise = this.components.map((component:Component) => {
+      return component.render(user)
+    });
     Promise.all(renderPromise).then(() => {
       console.log(`view updated : ${this.state.renderCount}`);
     });
@@ -52,7 +51,12 @@ export class Component{
    */
   render(user:any){
     return new Promise((resolve, reject) => {
-      this._render(user);
+      try{
+        this._render(user);
+        resolve(this);
+      }catch(e){
+        reject(e);
+      }
     }); 
   }
 }

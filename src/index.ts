@@ -1,7 +1,6 @@
-import * as Approach from "./approach";
-import User from "./user";
+import UserLoader from "./user-loader";
+import ViewLoader from "./view-loader";
 import App from "./app";
-import * as API from "./api";
 import * as util from "./util";
 
-export {Approach, User, App, API, util};
+export {App, util, ViewLoader, UserLoader};

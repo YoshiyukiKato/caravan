@@ -8,7 +8,8 @@
   "scripts": {
     "watch": "$(npm bin)/webpack --config webpack.config.js --watch --debug",
     "build" : "$(npm bin)/webpack --config webpack.config.js",
-    "test": "$(npm bin)/nyc $(npm bin)/mocha test/**/*.test.ts"
+    "test": "$(npm bin)/nyc $(npm bin)/mocha test/**/*.test.ts",
+    "server": "$(npm bin)/webpack-dev-server --config webpack.config.js --watch --debug"
   },
   "nyc": {
     "include": [

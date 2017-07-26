@@ -1,29 +1,32 @@
 import * as Promise from "bluebird";
 import User from "./user";
-import {Approaches} from "./approach";
-import {API} from "./api";
+import View from "./view";
+import UserLoader from "./user-loader";
+import ViewLoader, { ViewConfig, ComponentConfig } from "./view-loader";
+
 
 export default class App{
   isInitialized:boolean = false;
-  loadedAt:Date;
   user:User;
-  approaches:Approaches;
+  view:View;
 
-  constructor(api:API){
-    this.loadedAt = new Date();
-    this.user = new User(api);
-    this.approaches = new Approaches(api);
-  }
+  constructor(userLoader:UserLoader, viewLoader:ViewLoader){
+    this.user = new User();
+    this.view = new View();
+    this.user.onChange((user:User) => {
+      this.view.render(user);
+    });
 
-  init():Promise<App>{
-    if(this.isInitialized) return Promise.resolve(this);
-    const approachesPromise = this.approaches.init();
-    const userPromise = this.user.init();
-    return Promise.all([approachesPromise, userPromise])
-    .then(() => {
-      this.isInitialized = true;
-      this.approaches.renderAll(this.user);
-      return this;
+    //viewの初期化
+    viewLoader.load().then((viewConfig:ViewConfig) => {
+      viewConfig.components.map((component:ComponentConfig) => {
+        this.view.import(component.id, component._render);
+      });
+    });
+
+    //ユーザ情報の読み込み
+    userLoader.load().then((userProps:any) => {
+      this.user.setProps(userProps);
     });
   }
 }

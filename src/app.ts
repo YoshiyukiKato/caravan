@@ -19,7 +19,7 @@ export default class App{
 
     //viewの初期化
     viewLoader.load().then((viewConfig:ViewConfig) => {
-      viewConfig.components.map((component:ComponentConfig) => {
+      viewConfig.components.forEach((component:ComponentConfig) => {
         this.view.import(component.id, component._render);
       });
     });

@@ -12,7 +12,7 @@ export default class User{
   setProps(nextProps:any):Promise<User>{
     this.props = Object.assign(this.props, nextProps);
     return Promise.resolve(this.handleChangeFuncs)
-    .map((func:handleChangeFunc) => func(this.state))
+    .map((func:handleChangeFunc) => func(this))
     .then(() => this);
   }
 

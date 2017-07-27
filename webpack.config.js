@@ -1,16 +1,24 @@
+const fs = require("fs-extra");
 const path = require('path');
 const webpack = require('webpack');
 const WebpackIconvPlugin = require('webpack-iconv-plugin');
 
 const VERBOSE = process.argv.includes('--verbose');
 
+let entry = {
+  "index" : ["./src/index"],
+};
+
+fs.readdirSync("./example").map((file) => {
+  const f = file.match(/(.+)\.ts$/);
+  const filename = `example/${f[1]}`;
+  entry[filename] = "./" + filename;
+});
+
 module.exports = {
   plugins: [new webpack.optimize.AggressiveMergingPlugin()],
   
-  entry : {
-    "index" : ["./src/index"],
-    "web" : ["./src/web"],
-  },
+  entry : entry,
 
   output: {
     publicPath: '/',
@@ -29,13 +37,13 @@ module.exports = {
   devtool : 'inline-source-map',
 
   devServer: {
-    contentBase: path.join(__dirname, "dest"),
+    contentBase: path.join(__dirname, "dest/example"),
     compress: true,
     port: 9000
   },
 
   module : {
-    loaders: [
+    rules: [
       {
         test: /\.(js|jsx)?$/,
         loader : 'babel-loader',
@@ -47,7 +55,7 @@ module.exports = {
         test: /\.(ts|tsx)?$/,
         loader : "ts-loader",
         exclude : /node_modules/,
-        include : __dirname + "/src"
+        include : [__dirname + "/src", __dirname + "/example"]
       },
       
       {

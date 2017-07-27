@@ -11,15 +11,13 @@ export default class User{
 
   setProps(nextProps:any):Promise<User>{
     this.props = Object.assign(this.props, nextProps);
-    return Promise.resolve(this.handleChangeFuncs)
-    .map((func:handleChangeFunc) => func(this))
-    .then(() => this);
+    const promises = Promise.map(this.handleChangeFuncs, (func:handleChangeFunc) => { return func(this); })
+    return Promise.all(promises).then(() => { return this; });
   }
 
   setState(nextState:any):Promise<User>{
     this.state = Object.assign(this.state, nextState);
-    return Promise.resolve(this.handleChangeFuncs)
-    .map((func:handleChangeFunc) => func(this))
+    return Promise.map(this.handleChangeFuncs, (func:handleChangeFunc) => func(this))
     .then(() => this);
   }
 

@@ -6,8 +6,11 @@ class VL extends ViewLoader{
     return Promise.resolve({
       components : [
         {
-          id: "mock",
-          _render: (props) => { alert("Hello World!") }
+          id: "hello-world",
+          _render: (user:any) => {
+            console.log("hello world!")
+            console.log(user);
+          }
         }
       ]
     });
@@ -17,10 +20,13 @@ class VL extends ViewLoader{
 class UL extends UserLoader{
   load(){
     return Promise.resolve({
-      message : "mock"
+      name : "taro",
+      age : 20,
+      sex : "male"
     });
   }
 }
 
-const app = new App(new UL(), new VL());
-console.log(app);
+const app = new App();
+app.setUserLoader(new UL());
+app.setViewLoader(new VL());

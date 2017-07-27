@@ -30,8 +30,10 @@ export default class View{
     const renderPromise = this.components.map((component:Component) => {
       return component.render(user)
     });
-    Promise.all(renderPromise).then(() => {
+    
+    return Promise.all(renderPromise).then(() => {
       console.log(`view updated : ${this.state.renderCount}`);
+      this.state.renderCount += 1;
     });
   }
 }
@@ -54,8 +56,10 @@ export class Component{
       try{
         this._render(user);
         resolve(this);
+        return null;
       }catch(e){
         reject(e);
+        return null;
       }
     }); 
   }

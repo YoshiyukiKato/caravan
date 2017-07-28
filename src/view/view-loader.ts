@@ -10,6 +10,6 @@ export interface ComponentConfig{
   _render : (props:any) => any;
 }
 
-export default abstract class ViewLoader{
+export abstract class ViewLoader{
   abstract load():Promise<ViewConfig>
 }

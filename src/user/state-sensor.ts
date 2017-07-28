@@ -2,7 +2,7 @@ import * as Promise from "bluebird";
 
 type cb = (value:any) => any;
 
-export class UserSensor{
+export class StateSensor{
   private isActive:boolean = false;
   private state:any = {};
   private sensors:SensorUnit[] = [];
@@ -10,7 +10,7 @@ export class UserSensor{
   
   use(sensor:SensorUnit){
     this.state[sensor.name] = sensor.value;
-    sensor.onChange(function(this:UserSensor, sensor:SensorUnit){
+    sensor.onChange(function(this:StateSensor, sensor:SensorUnit){
       let nextState:any = {};
       nextState[sensor.name] = sensor.value;
       this.setState(nextState);

@@ -1,5 +1,5 @@
 import * as Promise from "bluebird";
-import {App,UserLoader,ViewLoader,UserSensor} from "../src";
+import {App,PropsLoader,ViewLoader,StateSensor} from "../src";
 import * as $ from "jquery";
 
 import UserProfile from "./user-loaders/user-profile";
@@ -9,10 +9,10 @@ import ConsoleUser from "./view-loaders/console-user";
 const app = new App();
 app.setViewLoader(new ConsoleUser());
 
-const ul = new UserLoader();
-ul.use(new UserProfile());
-app.setUserLoader(ul);
+const pl = new PropsLoader();
+pl.use(new UserProfile());
+app.user.setPropsLoader(pl);
 
-const us = new UserSensor();
-us.use(new After5Sec());
-app.setUserSensor(us);
+const ss = new StateSensor();
+ss.use(new After5Sec());
+app.user.setStateSensor(ss);

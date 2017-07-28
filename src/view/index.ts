@@ -1,5 +1,6 @@
 import * as Promise from "bluebird";
-import User from "./user";
+import {ViewLoader, ViewConfig, ComponentConfig} from "./view-loader";
+import User from "../user";
 
 type renderFunc = (user:any) => any;
 
@@ -19,6 +20,16 @@ export default class View{
     const component = new Component(id, _render);
     this.components.push(component);
     if(!!this.props.user) component.render(this.props.user);
+  }
+
+  setLoader(viewLoader:ViewLoader){
+    viewLoader.load()
+    .then((viewConfig:ViewConfig) => {
+      viewConfig.components.forEach((component:ComponentConfig) => {
+        this.import(component.id, component._render);
+      });
+    })
+    .catch(console.log);
   }
 
   /**

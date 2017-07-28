@@ -1,4 +1,6 @@
 import * as Promise from "bluebird";
+import {StateSensor} from "./state-sensor";
+import {PropsLoader} from "./props-loader";
 
 type handleChangeFunc = (user:User) => any
 
@@ -8,6 +10,16 @@ export default class User{
   public handleChangeFuncs: handleChangeFunc[] = [];
   
   constructor(){}
+
+  setStateSensor(stateSensor:StateSensor){
+    stateSensor.onChange((userState:any) => this.setState(userState));
+    stateSensor.activate();
+  }
+
+  setPropsLoader(propsLoader:PropsLoader){
+    propsLoader.onChange((userProps:any) => this.setProps(userProps));
+    propsLoader.load();
+  }
 
   setProps(nextProps:any):Promise<User>{
     this.props = Object.assign(this.props, nextProps);

@@ -2,7 +2,7 @@ import * as Promise from "bluebird";
 
 type cb = (userProps:any) => any;
 
-export class UserLoader{
+export class PropsLoader{
   private isLoaded:boolean = false;
   private state:any = {};
   private loaders:LoaderUnit[] = [];
@@ -10,7 +10,7 @@ export class UserLoader{
   
   use(loader:LoaderUnit){
     this.state[loader.name] = loader.value;
-    loader.onChange(function(this:UserLoader, sensor:LoaderUnit){
+    loader.onChange(function(this:PropsLoader, sensor:LoaderUnit){
       let nextState:any = {};
       nextState[sensor.name] = sensor.value;
       this.setState(nextState);

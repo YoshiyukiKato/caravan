@@ -1,16 +1,16 @@
 import * as Promise from "bluebird";
 import User from "./user";
 import View from "./view";
-import {UserLoader, LoaderUnit} from "./user-loader";
-import {UserSensor, SensorUnit} from "./user-sensor";
-import ViewLoader, { ViewConfig, ComponentConfig } from "./view-loader";
+import {PropsLoader, LoaderUnit} from "./user/props-loader";
+import {StateSensor, SensorUnit} from "./user/state-sensor";
+import {ViewLoader, ViewConfig, ComponentConfig } from "./view/view-loader";
 
 
 export default class App{
   isInitialized:boolean = false;
   user:User;
-  userLoader:UserLoader;
-  userSensor:UserSensor;
+  PropsLoader:PropsLoader;
+  StateSensor:StateSensor;
   view:View;
 
   constructor(){
@@ -19,14 +19,14 @@ export default class App{
     this.user.onChange((user:User) => { return this.view.render(user); });
   }
 
-  setUserSensor(userSensor:UserSensor){
-    userSensor.onChange((userState:any) => this.user.setState(userState));
-    userSensor.activate();
+  setStateSensor(StateSensor:StateSensor){
+    StateSensor.onChange((userState:any) => this.user.setState(userState));
+    StateSensor.activate();
   }
 
-  setUserLoader(userLoader:UserLoader){
-    userLoader.onChange((userProps:any) => this.user.setProps(userProps));
-    userLoader.load();
+  setPropsLoader(PropsLoader:PropsLoader){
+    PropsLoader.onChange((userProps:any) => this.user.setProps(userProps));
+    PropsLoader.load();
   }
 
   setViewLoader(viewLoader:ViewLoader){

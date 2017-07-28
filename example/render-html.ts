@@ -1,13 +1,13 @@
 import * as Promise from "bluebird";
-import {App,UserLoader,LoaderUnit,ViewLoader} from "../src";
+import {App,PropsLoader,LoaderUnit,ViewLoader} from "../src";
 import * as $ from "jquery";
 
 import UserProfile from "./user-loaders/user-profile";
 import UserHTML from "./view-loaders/user-html";
 
 const app = new App();
-app.setViewLoader(new UserHTML());
+app.view.setLoader(new UserHTML());
 
-const ul = new UserLoader();
+const ul = new PropsLoader();
 ul.use(new UserProfile());
-app.setUserLoader(ul);
+app.user.setPropsLoader(ul);

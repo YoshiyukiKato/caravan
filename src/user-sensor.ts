@@ -2,7 +2,7 @@ import * as Promise from "bluebird";
 
 type cb = (value:any) => any;
 
-export default class UserSensor{
+export class UserSensor{
   private isActive:boolean = false;
   private state:any = {};
   private sensors:SensorUnit[] = [];

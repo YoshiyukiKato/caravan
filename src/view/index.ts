@@ -20,14 +20,16 @@ export default class View{
     const component = new Component(id, _render);
     this.components.push(component);
     if(!!this.props.user) component.render(this.props.user);
+    return;
   }
 
   setLoader(viewLoader:ViewLoader){
-    viewLoader.load()
+    return viewLoader.load()
     .then((viewConfig:ViewConfig) => {
       viewConfig.components.forEach((component:ComponentConfig) => {
         this.import(component.id, component._render);
       });
+      return;
     })
     .catch(console.log);
   }

@@ -1,14 +1,16 @@
 import * as Promise from "bluebird";
 import User from "./user";
 import View from "./view";
-import UserLoader from "./user-loader";
-import UserSensor from "./user-sensor";
+import {UserLoader, LoaderUnit} from "./user-loader";
+import {UserSensor, SensorUnit} from "./user-sensor";
 import ViewLoader, { ViewConfig, ComponentConfig } from "./view-loader";
 
 
 export default class App{
   isInitialized:boolean = false;
   user:User;
+  userLoader:UserLoader;
+  userSensor:UserSensor;
   view:View;
 
   constructor(){
@@ -18,17 +20,13 @@ export default class App{
   }
 
   setUserSensor(userSensor:UserSensor){
-    userSensor.onChange((userState:any) => {
-      this.user.setState(userState);
-    })
-    console.log("here");
+    userSensor.onChange((userState:any) => this.user.setState(userState));
     userSensor.activate();
   }
 
   setUserLoader(userLoader:UserLoader){
-    userLoader.load()
-    .then((userProps:any) => this.user.setProps(userProps))
-    .catch(console.log);
+    userLoader.onChange((userProps:any) => this.user.setProps(userProps));
+    userLoader.load();
   }
 
   setViewLoader(viewLoader:ViewLoader){
@@ -41,6 +39,5 @@ export default class App{
     })
     .catch(console.log);
   }
-
 
 }

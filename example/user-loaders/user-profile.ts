@@ -6,7 +6,8 @@ export default class UserProfile extends LoaderUnit{
   }
   
   load(){
-    return Promise.resolve({
+    //本来は、ここでajaxなどを投げて、返って来た値を整形してvalueに入れる
+    this.change({
       name : "taro",
       age : 20,
       sex : "male"

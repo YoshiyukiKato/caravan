@@ -5,15 +5,13 @@ const WebpackIconvPlugin = require('webpack-iconv-plugin');
 
 const VERBOSE = process.argv.includes('--verbose');
 
-let entry = {
-  "index" : ["./src/index"],
-};
+let entry = {};
 
 fs.readdirSync("./example").map((file) => {
   const f = file.match(/(.+)\.ts$/);
   if(f){
-    const filename = `example/${f[1]}`;
-    entry[filename] = "./" + filename;
+    const filename = `${f[1]}`;
+    entry[filename] = "./example/" + filename;
   }
 });
 
@@ -25,7 +23,7 @@ module.exports = {
   output: {
     publicPath: '/',
     sourcePrefix: '',
-    path: __dirname + "/dest/",
+    path: __dirname + "/dest/example",
     filename: '[name].js',
     libraryTarget: "umd"
   },
@@ -37,6 +35,12 @@ module.exports = {
   },
   
   devtool : 'inline-source-map',
+
+  devServer: {
+    contentBase: path.join(__dirname, "dest/example"),
+    compress: true,
+    port: 9000
+  },
 
   module : {
     rules: [

@@ -54,7 +54,8 @@ export abstract class LoaderUnit{
     this.cbs.push(cb);
   }
 
-  change(){
+  change(value:any){
+    this.value = value;
     this.cbs.forEach((cb:cb) => cb(this.value));
   }
 

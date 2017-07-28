@@ -35,7 +35,6 @@ export default class App{
       viewConfig.components.forEach((component:ComponentConfig) => {
         this.view.import(component.id, component._render);
       });
-      return;
     })
     .catch(console.log);
   }

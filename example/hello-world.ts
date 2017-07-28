@@ -1,32 +1,13 @@
 import * as Promise from "bluebird";
 import {App,UserLoader,ViewLoader} from "../src";
 
-class VL extends ViewLoader{
-  load(){
-    return Promise.resolve({
-      components : [
-        {
-          id: "hello-world",
-          _render: (user:any) => {
-            console.log("hello world!")
-            console.log(user);
-          }
-        }
-      ]
-    });
-  }
-}
+import UserProfile from "./user-loaders/user-profile";
+import ConsoleUser from "./view-loaders/console-user";
 
-class UL extends UserLoader{
-  load(){
-    return Promise.resolve({
-      name : "taro",
-      age : 20,
-      sex : "male"
-    });
-  }
-}
 
 const app = new App();
-app.setUserLoader(new UL());
-app.setViewLoader(new VL());
+app.setViewLoader(new ConsoleUser());
+
+const ul = new UserLoader();
+ul.use(new UserProfile());
+app.setUserLoader(ul);

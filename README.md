@@ -1,35 +1,22 @@
-# web-sdk
+# caravan
+Microservice oriented framework for user-adaptive web service.
 
-## usage
+## motivation
+To provide flexible UI/UX that changes itself according to user.
 
-```ts
-import * as Promise from "bluebird";
-import {App,UserLoader,ViewLoader} from "../src";
+## architecture
+- user
+  - props is static attribute
+  - state is dynamic attribute
 
-class VL extends ViewLoader{
-  load(){
-    return Promise.resolve({
-      components : [
-        {
-          id: "mock",
-          _render: (user:any) => { console.log(user); }
-        }
-      ]
-    });
-  }
-}
+- props-loader
+- state-sensor
 
-class UL extends UserLoader{
-  load(){
-    return Promise.resolve({
-      profile : {
-        name : "taro",
-        age : 20,
-        sex : "male"
-      }
-    });
-  }
-}
+- view
+  - consists of isolated components
+  - stateful
+  - pluggable
+  - data-driven rendering
 
-const app = new App(new UL(), new VL());
-```
+- view-loader
+  - component delivery

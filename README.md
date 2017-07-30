@@ -5,11 +5,14 @@ Microservice oriented framework for user-adaptive web service.
 To provide flexible UI/UX that changes itself according to user.
 
 ## architecture
+<img width="500" src="https://raw.githubusercontent.com/YoshiyukiKato/caravan/master/assets/architecture.png"/>
+
 - user
   - props is static attribute
   - state is dynamic attribute
 
 - props-loader
+
 - state-sensor
 
 - view

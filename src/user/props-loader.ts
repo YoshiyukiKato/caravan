@@ -1,4 +1,9 @@
 import * as Promise from "bluebird";
+Promise.config({
+  warnings: {
+    wForgottenReturn: false
+  }
+});
 
 type cb = (userProps:any) => any;
 

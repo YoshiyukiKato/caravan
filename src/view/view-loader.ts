@@ -11,5 +11,6 @@ export interface ComponentConfig{
 }
 
 export abstract class ViewLoader{
-  abstract load():Promise<ViewConfig>
+  private env : "dev"|"prod";
+  abstract load():Promise<ViewConfig>;
 }

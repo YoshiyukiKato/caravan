@@ -16,12 +16,17 @@ export default class View{
    * @param id コンポーネントの識別id。施策idなどを入れる
    * @param _render DOMの生成や更新をする関数。
    */
+
   import(id:string, _render:renderFunc){
     const component = new Component(id, _render);
     this.components.push(component);
     if(!!this.props.user) component.render(this.props.user);
   }
 
+  /**
+   * viewのconfigを取り寄せるloaderを使う
+   * @param viewLoader 
+   */
   setLoader(viewLoader:ViewLoader){
     viewLoader.load()
     .then((viewConfig:ViewConfig) => {

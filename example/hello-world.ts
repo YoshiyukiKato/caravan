@@ -1,4 +1,4 @@
-import * as Promise from "bluebird";
+import Promise from "bluebird";
 import {App,PropsLoader,ViewLoader} from "../src";
 
 import UserProfile from "./user-loaders/user-profile";

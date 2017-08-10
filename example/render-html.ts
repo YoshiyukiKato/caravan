@@ -1,4 +1,4 @@
-import * as Promise from "bluebird";
+import Promise from "bluebird";
 import {App,PropsLoader,LoaderUnit,ViewLoader} from "../src";
 import * as $ from "jquery";
 

@@ -1,4 +1,4 @@
-import * as Promise from "bluebird";
+import Promise from "bluebird";
 import User from "./user";
 import View from "./view";
 import {PropsLoader, LoaderUnit} from "./user/props-loader";

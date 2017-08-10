@@ -1,4 +1,4 @@
-import * as Promise from "bluebird";
+import Promise from "bluebird";
 import * as $ from "jquery";
 
 export interface ViewConfig{

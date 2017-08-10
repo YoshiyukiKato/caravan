@@ -1,4 +1,4 @@
-import * as Promise from "bluebird";
+import Promise from "bluebird";
 import {ViewLoader} from "../../src";
 
 function renderUserInfo(name:any,age:any,sex:any){

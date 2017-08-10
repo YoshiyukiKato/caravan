@@ -1,4 +1,4 @@
-import * as Promise from "bluebird";
+import Promise from "bluebird";
 import {StateSensor} from "./state-sensor";
 import {PropsLoader} from "./props-loader";
 

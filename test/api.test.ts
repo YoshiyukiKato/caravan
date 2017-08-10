@@ -1,4 +1,4 @@
-import * as Promise from "bluebird";
+import Promise from "bluebird";
 import {API,util} from "../src/api";
 import * as assert from "power-assert";
 

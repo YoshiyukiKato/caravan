@@ -1,4 +1,4 @@
-import * as Promise from "bluebird";
+import Promise from "bluebird";
 import {ViewLoader, ViewConfig, ComponentConfig} from "./view-loader";
 import User from "../user";
 

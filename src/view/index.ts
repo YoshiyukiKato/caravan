@@ -6,7 +6,7 @@ type renderFunc = (user:any) => any;
 
 export default class View{
   private components:Component[] = [];
-  private props:any = { user : null };
+  private props:any = { user : {} };
   private state:any = { renderCount : 0 };
 
   constructor(){}

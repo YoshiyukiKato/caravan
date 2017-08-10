@@ -55,7 +55,7 @@ export default class App{
 
   //開発モード用機能
   __importUser__(user:any){
-    this.user.setProps(user.props || {});
+    this.user.setProps(user.props || {}, true);
     this.user.setState(user.state || {});
   }
   

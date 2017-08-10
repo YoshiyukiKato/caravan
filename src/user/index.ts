@@ -21,16 +21,24 @@ export default class User{
     propsLoader.load();
   }
 
-  setProps(nextProps:any):Promise<User>{
+  setProps(nextProps:any, silent:boolean=false):Promise<User>{
     this.props = Object.assign(this.props, nextProps);
-    const promises = Promise.map(this.handleChangeFuncs, (func:handleChangeFunc) => { return func(this); })
-    return Promise.all(promises).then(() => { return this; });
+    if(!silent){
+      const promises = Promise.map(this.handleChangeFuncs, (func:handleChangeFunc) => { return func(this); })
+      return Promise.all(promises).then(() => { return this; });
+    }else{
+      return Promise.resolve(this);
+    }
   }
 
-  setState(nextState:any):Promise<User>{
+  setState(nextState:any, silent:boolean=false):Promise<User>{
     this.state = Object.assign(this.state, nextState);
-    return Promise.map(this.handleChangeFuncs, (func:handleChangeFunc) => func(this))
-    .then(() => this);
+    if(!silent){
+      return Promise.map(this.handleChangeFuncs, (func:handleChangeFunc) => func(this))
+      .then(() => this);
+    }else{
+      return Promise.resolve(this);
+    }
   }
 
   onChange(cb:handleChangeFunc):void{

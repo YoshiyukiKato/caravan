@@ -2,11 +2,13 @@ const fs = require("fs-extra");
 const path = require('path');
 const webpack = require('webpack');
 const WebpackIconvPlugin = require('webpack-iconv-plugin');
+const UglifyJSPlugin = require("uglifyjs-webpack-plugin")
 
 const VERBOSE = process.argv.includes('--verbose');
 
 let entry = {
   "index" : ["./src/index"],
+  "web" : ["./src/web"],
 };
 
 fs.readdirSync("./example").map((file) => {
@@ -18,7 +20,10 @@ fs.readdirSync("./example").map((file) => {
 });
 
 module.exports = {
-  plugins: [new webpack.optimize.AggressiveMergingPlugin()],
+  plugins: [
+    new webpack.optimize.AggressiveMergingPlugin(),
+    new UglifyJSPlugin()
+  ],
   
   entry : entry,
 
@@ -49,7 +54,7 @@ module.exports = {
       
       {
         test: /\.(ts|tsx)?$/,
-        loader : "ts-loader",
+        loader : ["babel-loader", "ts-loader"],
         exclude : /node_modules/,
         include : [__dirname + "/src", __dirname + "/example"]
       },

@@ -7,15 +7,23 @@ import * as util from "./util";
 declare global{
   interface Window{
     Gimmickry : {
-      App;
-      util;
-      ViewLoader;
-      PropsLoader;
-      LoaderUnit;
-      StateSensor;
-      SensorUnit;
+      App:any;
+      util:any;
+      ViewLoader:any;
+      PropsLoader:any;
+      LoaderUnit:any;
+      StateSensor:any;
+      SensorUnit:any;
     }
   }
 }
 
-window.Gimmickry = {App, util, ViewLoader, PropsLoader, LoaderUnit, StateSensor, SensorUnit};
+window.Gimmickry = {
+  App : App,
+  util : util,
+  ViewLoader : ViewLoader,
+  PropsLoader : PropsLoader,
+  LoaderUnit : LoaderUnit,
+  StateSensor : StateSensor,
+  SensorUnit : SensorUnit
+};

@@ -1,8 +1,5 @@
-# caravan
-Microservice oriented framework for user-adaptive web service.
-
-## motivation
-To provide flexible UI/UX that changes itself according to user.
+# Gimmickry
+Application framework by user adaptive micro view components.
 
 ## architecture
 <img width="500" src="https://raw.githubusercontent.com/YoshiyukiKato/caravan/master/assets/architecture.png"/>

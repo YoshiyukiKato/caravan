@@ -1,6 +1,5 @@
-import {PropsLoader, LoaderUnit} from "./user/props-loader";
+import UserAttr from "./user/attr";
 import {ViewLoader} from "./view/view-loader";
-import {StateSensor, SensorUnit} from "./user/state-sensor";
 import App from "./app";
 import * as util from "./util";
 
@@ -10,10 +9,7 @@ declare global{
       App:any;
       util:any;
       ViewLoader:any;
-      PropsLoader:any;
-      LoaderUnit:any;
-      StateSensor:any;
-      SensorUnit:any;
+      UserAttr:any;
     }
   }
 }
@@ -22,8 +18,5 @@ window.Gimmickry = {
   App : App,
   util : util,
   ViewLoader : ViewLoader,
-  PropsLoader : PropsLoader,
-  LoaderUnit : LoaderUnit,
-  StateSensor : StateSensor,
-  SensorUnit : SensorUnit
+  UserAttr : UserAttr,
 };

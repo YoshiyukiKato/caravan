@@ -1,4 +1,5 @@
 import Promise from "bluebird";
+
 Promise.config({
   warnings: {
     wForgottenReturn: false
@@ -7,7 +8,7 @@ Promise.config({
 
 type cb = (userProps:any) => any;
 
-export class PropsLoader{
+export class UserLoader{
   private isLoaded:boolean = false;
   private state:any = {};
   private loaders:LoaderUnit[] = [];
@@ -15,7 +16,7 @@ export class PropsLoader{
   
   use(loader:LoaderUnit){
     this.state[loader.name] = loader.value;
-    loader.onChange(function(this:PropsLoader, sensor:LoaderUnit){
+    loader.onChange(function(this:UserLoader, sensor:LoaderUnit){
       let nextState:any = {};
       nextState[sensor.name] = sensor.value;
       this.setState(nextState);

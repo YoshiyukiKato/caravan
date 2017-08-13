@@ -2,26 +2,26 @@ import Promise from "bluebird";
 
 type cb = (value:any) => any;
 
-export class StateSensor{
+export class UserUpdater{
   private isActive:boolean = false;
   private state:any = {};
-  private sensors:SensorUnit[] = [];
+  private updaters:UpdaterUnit[] = [];
   private cbs:cb[] = [];
   
-  use(sensor:SensorUnit){
-    this.state[sensor.name] = sensor.value;
-    sensor.onChange(function(this:StateSensor, sensor:SensorUnit){
+  use(updater:UpdaterUnit){
+    this.state[updater.name] = updater.value;
+    updater.onChange(function(this:UserUpdater, updater:UpdaterUnit){
       let nextState:any = {};
-      nextState[sensor.name] = sensor.value;
+      nextState[updater.name] = updater.value;
       this.setState(nextState);
-    }.bind(this, sensor));
-    this.sensors.push(sensor);
+    }.bind(this, updater));
+    this.updaters.push(updater);
   }
 
   activate(){
     if(this.isActive) return;
     this.isActive = true;
-    this.sensors.forEach((sensor:SensorUnit) => sensor.watch());
+    this.updaters.forEach((updater:UpdaterUnit) => updater.watch());
   }
 
   setState(nextState:any){
@@ -34,7 +34,7 @@ export class StateSensor{
   }
 }
 
-export abstract class SensorUnit{
+export abstract class UpdaterUnit{
   name:string;
   value:any;
   private cbs:cb[] = [];

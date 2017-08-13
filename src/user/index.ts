@@ -1,54 +1,26 @@
-import Promise from "bluebird";
-import {StateSensor} from "./state-sensor";
-import {PropsLoader} from "./props-loader";
+import UserAttr from "./attr";
 
-type handleChangeFunc = (user:{ props:any, state:any }) => any
+type callback = (attrs:any) => any
 
 export default class User{
-  public state: any = { isInitialized : false };
-  public props: any = {};
-  public handleChangeFuncs: handleChangeFunc[] = [];
+  public attrs: any = {};
+  public callbacks: callback[] = [];
   
   constructor(){}
   
-  get data(){
-    return {
-      props : this.props,
-      state : this.state
-    }
+  use(attr:UserAttr<any>){
+    this.attrs[attr.name] = attr.value;
+    attr.onChange(this.setAttrs.bind(this));
+    attr.load();
+    attr.watch();
   }
 
-  setStateSensor(stateSensor:StateSensor){
-    stateSensor.onChange((userState:any) => this.setState(userState));
-    stateSensor.activate();
+  setAttrs(this:User, nextAttrs:any, silent:boolean=false){
+    this.attrs = Object.assign(this.attrs, nextAttrs);
+    if(!silent) this.callbacks.forEach((cb:callback) => cb(this.attrs));
   }
 
-  setPropsLoader(propsLoader:PropsLoader){
-    propsLoader.onChange((userProps:any) => this.setProps(userProps));
-    propsLoader.load();
-  }
-
-  setProps(nextProps:any, silent:boolean=false):Promise<User>{
-    this.props = Object.assign(this.props, nextProps);
-    if(!silent){
-      const promises = Promise.map(this.handleChangeFuncs, (func:handleChangeFunc) => func(this.data));
-      return Promise.all(promises).then(() => { return this; });
-    }else{
-      return Promise.resolve(this);
-    }
-  }
-
-  setState(nextState:any, silent:boolean=false):Promise<User>{
-    this.state = Object.assign(this.state, nextState);
-    if(!silent){
-      return Promise.map(this.handleChangeFuncs, (func:handleChangeFunc) => func(this.data))
-      .then(() => this);
-    }else{
-      return Promise.resolve(this);
-    }
-  }
-
-  onChange(cb:handleChangeFunc):void{
-    this.handleChangeFuncs.push(cb);
+  onChange(cb:callback):void{
+    this.callbacks.push(cb);
   };
 }

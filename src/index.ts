@@ -1,7 +1,7 @@
-import {PropsLoader, LoaderUnit} from "./user/props-loader";
+import {UserLoader, LoaderUnit} from "./user/loader";
 import {ViewLoader} from "./view/view-loader";
-import {StateSensor, SensorUnit} from "./user/state-sensor";
+import {UserUpdater, UpdaterUnit} from "./user/updater";
 import App from "./app";
 import * as util from "./util";
 
-export {App, util, ViewLoader, PropsLoader, LoaderUnit, StateSensor, SensorUnit};
+export {App, util, ViewLoader, UserLoader, LoaderUnit, UserUpdater, UpdaterUnit};

@@ -1,8 +1,6 @@
 import Promise from "bluebird";
 import User from "./user";
 import View from "./view";
-import {PropsLoader, LoaderUnit} from "./user/props-loader";
-import {StateSensor, SensorUnit} from "./user/state-sensor";
 import {ViewLoader, ViewConfig, ComponentConfig } from "./view/view-loader";
 
 declare global{
@@ -17,8 +15,6 @@ type Mode = "dev"|"prod";
 export default class App{
   isInitialized:boolean = false;
   user:User;
-  PropsLoader:PropsLoader;
-  StateSensor:StateSensor;
   view:View;
   mode:Mode;
 
@@ -33,30 +29,9 @@ export default class App{
     }
   }
 
-  setStateSensor(StateSensor:StateSensor){
-    StateSensor.onChange((userState:any) => this.user.setState(userState));
-    StateSensor.activate();
-  }
-
-  setPropsLoader(PropsLoader:PropsLoader){
-    PropsLoader.onChange((userProps:any) => this.user.setProps(userProps));
-    PropsLoader.load();
-  }
-
-  setViewLoader(viewLoader:ViewLoader){
-    viewLoader.load()
-    .then((viewConfig:ViewConfig) => {
-      viewConfig.components.forEach((component:ComponentConfig) => {
-        this.view.import(component.id, component._render);
-      });
-    })
-    .catch(console.log);
-  }
-
   //開発モード用機能
-  __importUser__(user:any){
-    this.user.setProps(user.props || {}, true);
-    this.user.setState(user.state || {});
+  __importUser__(attrs:any){
+    this.user.setAttrs(attrs);
   }
   
   __importView__(id:string, _render:(user:any) => any){

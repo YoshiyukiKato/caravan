@@ -1,7 +1,6 @@
 import Promise from "bluebird";
 import User from "./user";
 import View from "./view";
-import {ViewLoader, ViewConfig, ComponentConfig } from "./view/view-loader";
 
 declare global{
   interface Window{

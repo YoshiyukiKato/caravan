@@ -1,5 +1,5 @@
 import UserAttr from "./user/attr";
-import {ViewLoader} from "./view/view-loader";
+import ViewComponent from "./view/component";
 import App from "./app";
 import * as util from "./util";
 
@@ -8,7 +8,7 @@ declare global{
     Gimmickry : {
       App:any;
       util:any;
-      ViewLoader:any;
+      ViewComponent:any;
       UserAttr:any;
     }
   }
@@ -17,6 +17,6 @@ declare global{
 window.Gimmickry = {
   App : App,
   util : util,
-  ViewLoader : ViewLoader,
+  ViewComponent : ViewComponent,
   UserAttr : UserAttr,
 };

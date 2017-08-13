@@ -1,7 +1,6 @@
-import {UserLoader, LoaderUnit} from "./user/loader";
-import {ViewLoader} from "./view/view-loader";
-import {UserUpdater, UpdaterUnit} from "./user/updater";
+import UserAttr from "./user/attr";
+import ViewComponent from "./view/component";
 import App from "./app";
 import * as util from "./util";
 
-export {App, util, ViewLoader, UserLoader, LoaderUnit, UserUpdater, UpdaterUnit};
+export {App, util, UserAttr, ViewComponent};

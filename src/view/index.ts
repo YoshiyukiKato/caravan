@@ -1,6 +1,5 @@
 import Promise from "bluebird";
-import {ViewLoader, ViewConfig, ComponentConfig} from "./view-loader";
-import User from "../user";
+import Component from "./component";
 
 type renderFunc = (user:any) => any;
 
@@ -19,24 +18,13 @@ export default class View{
 
   import(id:string, _render:renderFunc){
     const component = new Component(id, _render);
+    this.use(component);
+  }
+
+  use(component:Component){
     this.components.push(component);
     if(!!this.props.user) component.render(this.props.user);
     return;
-  }
-
-  /**
-   * viewのconfigを取り寄せるloaderを使う
-   * @param viewLoader 
-   */
-  setLoader(viewLoader:ViewLoader){
-    return viewLoader.load()
-    .then((viewConfig:ViewConfig) => {
-      viewConfig.components.forEach((component:ComponentConfig) => {
-        this.import(component.id, component._render);
-      });
-      return;
-    })
-    .catch(console.log);
   }
 
   /**
@@ -53,32 +41,5 @@ export default class View{
       console.log(`view updated : ${this.state.renderCount}`);
       this.state.renderCount += 1;
     });
-  }
-}
-
-export class Component{
-  private id : string;
-  private _render:renderFunc;
-  private state:any = {};
-  constructor(id:string, _render:renderFunc){
-    this.id = id;
-    this._render = _render;
-  }
-  
-  /**
-   * ユーザ情報を引数にとって、DOMを操作する
-   * @param user 
-   */
-  render(user:any){
-    return new Promise((resolve, reject) => {
-      try{
-        this._render(user);
-        resolve(this);
-        return null;
-      }catch(e){
-        reject(e);
-        return null;
-      }
-    }); 
   }
 }

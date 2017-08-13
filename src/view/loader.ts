@@ -1,5 +1,4 @@
 import Promise from "bluebird";
-import * as $ from "jquery";
 
 export interface ViewConfig{
   components : ComponentConfig[]

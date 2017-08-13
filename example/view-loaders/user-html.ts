@@ -16,9 +16,9 @@ export default class UserHTML extends ViewLoader{
         {
           id: "user-html",
           _render: (user:any) => {
-            const profile = user.props.user_profile;
+            const profile = user["user-profile"];
             const html = renderUserInfo(profile.name, profile.age, profile.sex);
-            $("body").append(html);
+            $("#user-profile").html(html);
           }
         }
       ]

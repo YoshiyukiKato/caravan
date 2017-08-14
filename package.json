@@ -1,7 +1,7 @@
 {
-  "name": "gizmo-web-lib",
+  "name": "gimmickry",
   "version": "0.0.1",
-  "description": "library of gizmo web client",
+  "description": "Application framework by micro view components.",
   "main": "index.js",
   "author": "Yoshiyuki Kato",
   "license": "MIT",

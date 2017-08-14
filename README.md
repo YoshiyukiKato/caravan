@@ -30,7 +30,7 @@ interface UserSchema{
 class RenderHTML extends ViewComponent{
   id:string = "render-html";
   render(user:UserSchema){
-    document.querySelector("#user-profile") = `
+    document.querySelector("#user-profile").innerHTML = `
       <div>name : ${user.proile.name}</div>
       <div>age : ${user.proile.age}</div>
     `;

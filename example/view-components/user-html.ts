@@ -9,13 +9,12 @@ function renderUserInfo(name:any,age:any,sex:any){
 }
 
 export default class UserHTML extends ViewComponent{
-  constructor(){
-    super("user-html", (user:any) => {
-      const profile = user["user-profile"];
-      if(profile){
-        const html = renderUserInfo(profile.name, profile.age, profile.sex);
-        $("#user-profile").html(html);
-      }
-    });
+  id : "user-html";
+  render(user:any){
+    const profile = user["user-profile"];
+    if (profile) {
+      const html = renderUserInfo(profile.name, profile.age, profile.sex);
+      $("#user-profile").html(html);
+    }
   }
 }

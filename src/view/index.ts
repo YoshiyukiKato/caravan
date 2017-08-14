@@ -34,7 +34,7 @@ export default class View{
   render(user:any){
     this.props.user = user;
     const renderPromise = this.components.map((component:Component) => {
-      return component.render(user)
+      return component._render(user)
     });
     
     return Promise.all(renderPromise).then(() => {

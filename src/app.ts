@@ -4,7 +4,7 @@ import View from "./view";
 
 declare global{
   interface Window{
-    __importView__ : (id:string, _render:(user:any) => any) => any;
+    __importView__ : (id:string, render:(user:any) => any) => any;
     __importUser__ : (user:any) => any;
   }
 }
@@ -33,8 +33,8 @@ export default class App{
     this.user.setAttrs(attrs);
   }
   
-  __importView__(id:string, _render:(user:any) => any){
+  __importView__(id:string, render:(user:any) => any){
     const devId = `dev-${id}`;
-    this.view.import(devId, _render);
+    this.view.import(devId, render);
   }
 }

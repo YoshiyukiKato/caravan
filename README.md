@@ -1,22 +1,46 @@
 # Gimmickry
 Application framework by user adaptive micro view components.
 
-## architecture
-<img width="500" src="https://raw.githubusercontent.com/YoshiyukiKato/caravan/master/assets/architecture.png"/>
+## usage
 
-- user
-  - props is static attribute
-  - state is dynamic attribute
+```ts
+import {App, UserAttr, ViewComponent} from "path/to/Gimmickry";
 
-- props-loader
+interface UserProfileSchema{
+  name : string;
+  age : number;
+}
 
-- state-sensor
+class UserProfile extends UserAttr<UserProfileSchema>{
+  public name:string = "profile";
+  public value:UserProfileSchema = { name : "", age : "" };
+  load(){
+    //get value from somewhere like API, cookie, etc.
+    this.set({
+      name : "taro",
+      age : 20
+    });
+  }
+}
 
-- view
-  - consists of isolated components
-  - stateful
-  - pluggable
-  - data-driven rendering
+interface UserSchema{
+  profile:UserProfileSchema
+}
 
-- view-loader
-  - component delivery
+class RenderHTML extends ViewComponent{
+  id : "render-html";
+  render(user:UserSchema){
+    document.querySelector("#user-profile") = `
+      <div>name : ${user.proile.name}</div>
+      <div>age : ${user.proile.age}</div>
+    `;
+  }
+}
+
+const app = new App();
+app.user.use(new UserProfile());
+app.view.use(new UserHTML())
+```
+
+## LICENSE
+MIT

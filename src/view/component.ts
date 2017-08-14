@@ -1,28 +1,26 @@
 type renderFunc = (user:any) => any;
 
 export default class ViewComponent{
-  private id : string;
-  private _render:renderFunc;
+  id:string = "";
   private state:any = {};
-  constructor(id:string, _render:renderFunc){
-    this.id = id;
-    this._render = _render;
-  }
   
+  constructor(id?:string, render?:renderFunc){
+    if(id) this.id = id;
+    if(render) this.render = render;
+  }
+
   /**
-   * ユーザ情報を引数にとって、DOMを操作する
+   * view 
    * @param user 
    */
-  render(user:any){
-    return new Promise((resolve, reject) => {
-      try{
-        this._render(user);
-        resolve(this);
-        return null;
-      }catch(e){
-        reject(e);
-        return null;
-      }
-    }); 
+  _render(user:any):Promise<any>{
+    try {
+      this.render(user);
+    } catch (e) {
+      console.log(e);
+    }
+    return Promise.resolve(user)
   }
+
+  render(user:any){};
 }

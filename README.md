@@ -12,8 +12,8 @@ interface UserProfileSchema{
 }
 
 class UserProfile extends UserAttr<UserProfileSchema>{
-  public name:string = "profile";
-  public value:UserProfileSchema = { name : "", age : "" };
+  name:string = "profile";
+  value:UserProfileSchema = { name : "", age : "" };
   load(){
     //get value from somewhere like API, cookie, etc.
     this.set({
@@ -28,7 +28,7 @@ interface UserSchema{
 }
 
 class RenderHTML extends ViewComponent{
-  id : "render-html";
+  id:string = "render-html";
   render(user:UserSchema){
     document.querySelector("#user-profile") = `
       <div>name : ${user.proile.name}</div>

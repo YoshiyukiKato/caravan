@@ -1,19 +1,26 @@
 # Gimmickry
-Application framework by user adaptive micro view components.
+Gimmick; a function adapts UI/UX for a user according to his/her attributes.
 
-## usage
+## motivation
+To provide user-adaptive UI/UX conveniently.
+
+- user-driven view rendering
+- stateful user attributes
+- small and encapsulated view component
+
+# usage
 
 ```ts
 import {App, UserAttr, ViewComponent} from "path/to/Gimmickry";
 
 interface UserProfileSchema{
-  name : string;
+  name : sting;
   age : number;
 }
 
 class UserProfile extends UserAttr<UserProfileSchema>{
   name:string = "profile";
-  value:UserProfileSchema = { name : "", age : "" };
+  value:UserProfileSchema = { name : "", age : 0 };
   load(){
     //get value from somewhere like API, cookie, etc.
     this.set({
@@ -39,8 +46,10 @@ class RenderHTML extends ViewComponent{
 
 const app = new App();
 app.user.use(new UserProfile());
-app.view.use(new UserHTML())
+app.view.use(new UserHTML());
 ```
+
+
 
 ## LICENSE
 MIT

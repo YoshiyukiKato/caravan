@@ -1,39 +1,76 @@
 import "./util/browser.env";
 import User from "../src/user";
-import TestAPI from "./fixture/testapi";
+import UserAttr from "../src/user/attr";
+import * as sinon from "sinon";
 import * as assert from "power-assert";
 
-const testapi = new TestAPI();
 
 describe("user", () => {
   var user;
-  it("Userインスタンスの作成", () => {
-    user = new User(testapi);
-    assert.deepEqual(user.state, { isInitialized : false });
-    assert.deepEqual(user.props, {});
-    assert.deepEqual(user.handleChangeStateFuncs, []);
+  it("create new user instance", () => {
+    user = new User();
+    assert(user);
   });
 
-  it("stateが変化したときのコールバックを設定", () => {
-    const callback = (nextState) => { return true; };
-    user.onChangeState(callback);
-    assert.deepEqual(user.handleChangeStateFuncs, [callback]);
-  });
+  describe("UserAttr", () => {
+    interface Schema {
+      count : number;
+    }
 
-  it("stateを変化させる", () => {
-    const callback = sinon.spy();
-    user.onChangeState(callback);
-    user.setState({ changed : true })
-    .then(() => {
-      assert(callback.called === true);
+    class TestAttr extends UserAttr<Schema>{
+      name = "test";
+      value = {
+        count : 0
+      };
+    }
+
+    var attr;
+    it("create new attribute", () => {
+      attr = new TestAttr();
+      assert(attr);
+    });
+
+    it("update attribute value", () => {
+      attr.set({ count : 1 });
+      assert(attr.value.count === 1);
+    });
+
+    it("set callback for when attribute updated", () => {
+      const callback = sinon.spy();
+      attr.onChange(callback);
+      attr.set({});
+      assert(callback.called);
+    });
+
+    it("receive latest attribute value", () => {
+      attr.onChange((attrs:any) => {
+        const value = attrs["test"];
+        assert(value.count === 2);
+      });
+      attr.set({ count : 2 });
     });
   });
 
-  it("API経由でユーザのプロパティを取得", () => {
-    user.init()
-    .then(() => {
-      assert.notDeepEqual(user.props, {});
-      assert(user.state.isInitialized === true);
-    });
+  interface Schema {
+    count : number;
+  }
+
+  class TestAttr extends UserAttr<Schema>{
+    name = "test-attr";
+    value = {
+      count : 0
+    };
+    
+    load(){
+      return {
+        count : 1
+      }
+    }
+  }
+
+  it("loads attribute data when use", () => {
+    const attr = new TestAttr();
+    user.use(attr);
   });
+
 });

@@ -22,7 +22,7 @@ module.exports = {
   output: {
     publicPath: '/',
     sourcePrefix: '',
-    path: __dirname + "/",
+    path: __dirname + "/dest",
     filename: '[name].js',
     libraryTarget: "umd"
   },

@@ -1,6 +1,6 @@
 import UserAttr from "../../src/user/attr"
 
-interface Value{
+export interface Value{
   isPassed : boolean;
 }
 

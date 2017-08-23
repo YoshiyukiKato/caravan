@@ -1,4 +1,4 @@
-type renderFunc = (user:any) => any;
+export type renderFunc = (user:any) => any;
 
 export default class ViewComponent{
   id:string = "";

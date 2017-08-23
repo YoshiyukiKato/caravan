@@ -1,7 +1,5 @@
 import Promise from "bluebird";
-import Component from "./component";
-
-type renderFunc = (user:any) => any;
+import Component, {renderFunc} from "./component";
 
 export default class View{
   private components:Component[] = [];

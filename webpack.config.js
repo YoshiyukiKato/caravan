@@ -11,14 +11,6 @@ let entry = {
   "web" : ["./src/web"],
 };
 
-fs.readdirSync("./example").map((file) => {
-  const f = file.match(/(.+)\.ts$/);
-  if(f){
-    const filename = `example/${f[1]}`;
-    entry[filename] = "./" + filename;
-  }
-});
-
 module.exports = {
   plugins: [
     new webpack.optimize.AggressiveMergingPlugin(),
@@ -30,7 +22,7 @@ module.exports = {
   output: {
     publicPath: '/',
     sourcePrefix: '',
-    path: __dirname + "/dest/",
+    path: __dirname + "/",
     filename: '[name].js',
     libraryTarget: "umd"
   },

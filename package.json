@@ -2,7 +2,8 @@
   "name": "gimmickry",
   "version": "0.0.1",
   "description": "Application framework by micro view components.",
-  "main": "index.js",
+  "main": "./dest/index.js",
+  "types":"./dest/index.d.ts",
   "author": "Yoshiyuki Kato",
   "license": "MIT",
   "scripts": {

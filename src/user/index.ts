@@ -1,6 +1,4 @@
-import UserAttr from "./attr";
-
-type callback = (attrs:any) => any
+import UserAttr, {callback} from "./attr";
 
 export default class User{
   public attrs: any = {};

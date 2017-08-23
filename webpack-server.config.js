@@ -7,11 +7,11 @@ const VERBOSE = process.argv.includes('--verbose');
 
 let entry = {};
 
-fs.readdirSync("./example").map((file) => {
+fs.readdirSync("./example/src").map((file) => {
   const f = file.match(/(.+)\.ts$/);
   if(f){
     const filename = `${f[1]}`;
-    entry[filename] = "./example/" + filename;
+    entry[filename] = "./example/src/" + filename;
   }
 });
 
@@ -23,7 +23,7 @@ module.exports = {
   output: {
     publicPath: '/',
     sourcePrefix: '',
-    path: __dirname + "/dest/example",
+    path: __dirname + "/example/dest",
     filename: '[name].js',
     libraryTarget: "umd"
   },
@@ -37,7 +37,7 @@ module.exports = {
   devtool : 'inline-source-map',
 
   devServer: {
-    contentBase: path.join(__dirname, "dest/example"),
+    contentBase: path.join(__dirname, "example/dest"),
     compress: true,
     port: 9000
   },

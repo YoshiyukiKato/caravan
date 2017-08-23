@@ -1,4 +1,4 @@
-type callback = (value:any) => any;
+export type callback = (value:any) => any;
 
 export default abstract class UserAttr<T>{
   public abstract name:string;

@@ -1,6 +1,6 @@
 import UserAttr from "../../src/user/attr";
 
-interface Profile{
+export interface Profile{
   name? : string;
   age? : number;
   sex? : string;

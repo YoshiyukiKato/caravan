@@ -9,8 +9,7 @@ declare global{
   }
 }
 
-type Mode = "dev"|"prod";
-
+export type Mode = "dev"|"prod";
 export default class App{
   isInitialized:boolean = false;
   user:User;

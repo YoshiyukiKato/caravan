@@ -1,10 +1,10 @@
 import Filter from "./filter";
 
-export type renderFunc = (user:any) => any;
+export type renderFunc = (userAttrs:any) => any;
 
 export default class ViewComponent{
   id:string = "";
-  private filters:Filter[];
+  private filters:Filter[] = [];
   private state:any = {};
   
   constructor(id?:string, render?:renderFunc){

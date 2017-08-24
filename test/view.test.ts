@@ -18,7 +18,6 @@ class TestFilter extends Filter{
 }
 
 class TestFilterForAll extends Filter{
-  componentId = "*";
   validate(userAttrs:{isTarget:boolean}):boolean{
     return userAttrs.isTarget;
   }

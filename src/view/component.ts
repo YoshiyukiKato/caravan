@@ -26,8 +26,9 @@ export default class ViewComponent{
    */
   _render(userAttrs:any):Promise<any>{
     try {
+      const componentId = this.id;
       const isTargetUser = this.filters.reduce((acc:boolean, filter:Filter) => {
-        return filter.validate(userAttrs);
+        return filter.validate(userAttrs, componentId);
       }, true);
 
       if(isTargetUser) this.render(userAttrs);

@@ -13,8 +13,8 @@ export default class View{
    * @param id unique id of a component
    * @param _render render function of a component
    */
-  import(id:string, _render:renderFunc){
-    const component = new Component(id, _render);
+  import(id:string, render:renderFunc){
+    const component = new Component(id, render);
     this.use(component);
   }
 
@@ -25,11 +25,11 @@ export default class View{
   use(component:Component){
     this.components.push(component);
     this.filters.forEach((filter:Filter) => {
-      if(filter.componentId === "*" || component.id === filter.componentId){
+      if(!filter.componentId || component.id === filter.componentId){
         component.useFilter(filter);
       }
     });
-    component.render(this.userAttrs);
+    component._render(this.userAttrs);
     return;
   }
 
@@ -39,7 +39,7 @@ export default class View{
    */
   useFilter(filter:Filter){
     this.filters.push(filter);
-    if(filter.componentId === "*"){
+    if(!filter.componentId){
       this.components.forEach((component:Component) => {
         component.useFilter(filter);
       });

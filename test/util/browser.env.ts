@@ -10,7 +10,6 @@ declare global{
 global.$ = jquery;*/
 
 
-
 import {jsdom} from "jsdom";
 import * as jquery from "jquery";
 

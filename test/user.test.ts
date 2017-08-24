@@ -12,6 +12,16 @@ describe("user", () => {
     assert(user);
   });
 
+  it("set user attributes", () => {
+    const attrs = {
+      attrName : {
+        kay : "value"
+      }
+    };
+    user.setAttrs(attrs);
+    assert(user.attrs);
+  });
+
   describe("UserAttr", () => {
     interface Schema {
       count : number;
@@ -62,15 +72,17 @@ describe("user", () => {
     };
     
     load(){
-      return {
+      this.set({
         count : 1
-      }
+      });
     }
   }
 
   it("loads attribute data when use", () => {
     const attr = new TestAttr();
     user.use(attr);
+    user.onChange((attrs:any) => {
+      assert(attrs["test-attr"]);
+    });
   });
-
 });

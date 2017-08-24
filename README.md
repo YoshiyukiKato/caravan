@@ -46,7 +46,7 @@ class RenderHTML extends ViewComponent{
 
 const app = new App();
 app.user.use(new UserProfile());
-app.view.use(new UserHTML());
+app.view.use(new RenderHTML());
 ```
 
 

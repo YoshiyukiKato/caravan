@@ -4,6 +4,7 @@ import Filter from "./filter";
 
 export default class View{
   readonly components:Component[] = [];
+  readonly filters:Filter[] = [];
   private userAttrs:any = {}; 
   private state:any = { renderCount : 0 };
 
@@ -23,7 +24,12 @@ export default class View{
    */
   use(component:Component){
     this.components.push(component);
-    if(!!this.userAttrs) component.render(this.userAttrs);
+    this.filters.forEach((filter:Filter) => {
+      if(filter.componentId === "*" || component.id === filter.componentId){
+        component.useFilter(filter);
+      }
+    });
+    component.render(this.userAttrs);
     return;
   }
 
@@ -32,13 +38,11 @@ export default class View{
    * @param filter has component id and validate function
    */
   useFilter(filter:Filter){
-    //for all components
+    this.filters.push(filter);
     if(filter.componentId === "*"){
       this.components.forEach((component:Component) => {
         component.useFilter(filter);
       });
-    
-    //for certain component
     }else{
       const component = this.components.find((component:Component) => {
         return component.id === filter.componentId;

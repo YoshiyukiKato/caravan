@@ -34,9 +34,11 @@ describe("view", () => {
     describe("use", () => {
       it("add a component to a list of them", () => {
         const view = new View();
-        const component = new Component("test", () => {});
+        const callback = sinon.spy();
+        const component = new Component("test", callback);
         view.use(component);
         assert(view.components[0].id === "test");
+        assert(callback.called);
       });
     });
     
@@ -49,28 +51,61 @@ describe("view", () => {
     });
     
     describe("useFilter", () => {
-      it("add filter for all components", () => {
-        const view = new View();
-        const component1 = new Component("test1", () => {});
-        const component2 = new Component("test2", () => {});
-        const filter = new TestFilterForAll();
-        view.use(component1);
-        view.use(component2);
-        view.useFilter(filter);
-        assert.deepEqual(filter, component1.filters[0]);
-        assert.deepEqual(filter, component2.filters[0]);
+      context("a target component exists", () => {
+        it("add filter for all components", () => {
+          const view = new View();
+          const component1 = new Component("test1", () => { });
+          const component2 = new Component("test2", () => { });
+          const filter = new TestFilterForAll();
+          view.use(component1);
+          view.use(component2);
+          view.useFilter(filter);
+          assert.deepEqual(filter, component1.filters[0]);
+          assert.deepEqual(filter, component2.filters[0]);
+        });
+
+        it("add filter for certain component", () => {
+          const view = new View();
+          const target = new Component("test", () => { });
+          const other = new Component("other", () => { });
+          const filter = new TestFilter();
+          view.use(target);
+          view.use(other);
+          view.useFilter(filter);
+          assert.deepEqual(filter, target.filters[0]);
+          assert(other.filters.length === 0);
+        });
       });
-      
-      it("add filter for certain component", () => {
-        const view = new View();
-        const target = new Component("test", () => {});
-        const other = new Component("other", () => {});
-        const filter = new TestFilter();
-        view.use(target);
-        view.use(other);
-        view.useFilter(filter);
-        assert.deepEqual(filter, target.filters[0]);
-        assert(other.filters.length === 0);
+
+      context("a target components does not exist", () => {
+        it("applies a filter when a target component added", () => {
+          const view = new View();
+          const filter = new TestFilter();
+          const filter4all = new TestFilterForAll();
+          view.useFilter(filter);
+          view.useFilter(filter4all);
+          const target = new Component("test", () => { });
+          const other = new Component("other", () => { });
+          view.use(target);
+          view.use(other);
+          assert.deepEqual(filter, target.filters[0]);
+          assert.deepEqual(filter4all, target.filters[1]);
+          assert.deepEqual(filter4all, other.filters[0]);
+        });
+      });
+    });
+
+    describe("render", () => {
+      const view = new View();
+      const callback1 = sinon.spy();
+      const callback2 = sinon.spy();
+      const component1 = new Component("test1", callback1);
+      const component2 = new Component("test2", callback2);
+      view.use(component1);
+      view.use(component2);
+      return view.render({}).then(() => {
+        assert(callback1.called);
+        assert(callback2.called);
       });
     });
   });
@@ -96,12 +131,30 @@ describe("view", () => {
     });
 
     describe("_render", () => {
+      context("error in a render method of a component", () => {
+        it("does not throw it", () => {
+          const callback = () => { throw new Error("This is error for Test. No problem ;)"); };
+          const component = new Component("test", callback);
+          const userAttrs = {};
+          return component._render(userAttrs)
+            .then(() => {
+              assert(true, "OK");
+            })
+            .catch(() => {
+              assert(false, "Unexpected catch");
+            })
+        });
+      });
+
       context("without filter", () => {
         it("calls render for any user attributes", () => {
           const callback = sinon.spy();
           const component = new Component("test", callback);
           const userAttrs = {};
-          component._render(userAttrs);
+          return component._render(userAttrs)
+            .then(() => {
+              assert(callback.called);
+            });
         });
       });
 

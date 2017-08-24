@@ -1,4 +1,4 @@
-import {ViewComponent} from "../../src";
+import {ViewComponent} from "../../../src";
 
 
 export default class ConsoleUser extends ViewComponent{

@@ -1,4 +1,4 @@
-import {App} from "../src";
+import {App} from "../../src";
 import UserProfile from "./user-attrs/profile";
 import ConsoleUser from "./view-components/console-user";
 

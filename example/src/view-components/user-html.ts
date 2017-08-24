@@ -1,4 +1,4 @@
-import {ViewComponent} from "../../src";
+import {ViewComponent} from "../../../src";
 
 function renderUserInfo(name:any,age:any,sex:any){
   return `<h1>User info</h1>

@@ -1,4 +1,4 @@
-import UserAttr from "../../src/user/attr";
+import {UserAttr} from "../../../src";
 
 export interface Profile{
   name? : string;

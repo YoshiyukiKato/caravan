@@ -1,1 +1,1 @@
-import "../src/web";
+import "../../src/web";

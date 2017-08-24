@@ -1,4 +1,4 @@
-import {App} from "../src";
+import {App} from "../../src";
 
 import UserProfile from "./user-attrs/profile";
 import After5Sec from "./user-attrs/after-5-sec";

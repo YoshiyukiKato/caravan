@@ -1,4 +1,4 @@
-import {App} from "../src";
+import {App} from "../../src";
 import UserProfile from "./user-attrs/profile";
 import UserHTML from "./view-components/user-html";
 

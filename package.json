@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "Application framework by micro view components.",
   "main": "./dest/index.js",
-  "types":"./dest/index.d.ts",
+  "types": "./dest/index.d.ts",
   "author": "Yoshiyuki Kato",
   "license": "MIT",
   "scripts": {
@@ -64,16 +64,10 @@
     "typescript": "^2.3.4",
     "uglifyjs-webpack-plugin": "^0.4.6",
     "webpack": "^2.2.1",
-    "webpack-dev-server": "^2.4.1",
-    "webpack-iconv-plugin": "^0.0.2"
+    "webpack-dev-server": "^2.4.1"
   },
   "dependencies": {
     "bluebird": "^3.5.0",
-    "jquery": "^3.2.1",
-    "node-fs-extra": "^0.8.1",
-    "react": "^15.4.2",
-    "react-dnd": "^2.3.0",
-    "react-dnd-html5-backend": "^2.3.0",
-    "react-dom": "^15.4.2"
+    "jquery": "^3.2.1"
   }
 }

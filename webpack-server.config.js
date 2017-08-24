@@ -1,7 +1,6 @@
-const fs = require("fs-extra");
+const fs = require("fs");
 const path = require('path');
 const webpack = require('webpack');
-const WebpackIconvPlugin = require('webpack-iconv-plugin');
 
 const VERBOSE = process.argv.includes('--verbose');
 

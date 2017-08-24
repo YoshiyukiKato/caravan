@@ -1,4 +1,4 @@
-import Promise from "bluebird";
+import * as Promise from "bluebird";
 import Component, {renderFunc} from "./component";
 
 export default class View{

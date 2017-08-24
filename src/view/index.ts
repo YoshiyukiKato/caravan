@@ -1,42 +1,66 @@
 import * as Promise from "bluebird";
 import Component, {renderFunc} from "./component";
+import Filter from "./filter";
 
 export default class View{
   private components:Component[] = [];
-  private props:any = { user : {} };
+  private userAttrs:any = {}; 
   private state:any = { renderCount : 0 };
 
-  constructor(){}
-
   /**
-   * 施策のコンポーネントを取り込む
-   * @param id コンポーネントの識別id。施策idなどを入れる
-   * @param _render DOMの生成や更新をする関数。
+   * build component dynamically and use it
+   * @param id unique id of a component
+   * @param _render render function of a component
    */
-
   import(id:string, _render:renderFunc){
     const component = new Component(id, _render);
     this.use(component);
   }
 
+  /**
+   * add a view component to the list of them
+   * @param component view component
+   */
   use(component:Component){
     this.components.push(component);
-    if(!!this.props.user) component.render(this.props.user);
+    if(!!this.userAttrs) component.render(this.userAttrs);
     return;
   }
 
   /**
-   * userデータを引数に取り、保持するcomponentsすべてのrenderメソッドを呼び出
-   * @param user ユーザ情報。属性情報などを持っている 
+   * Distribute a filter to target components
+   * @param filter has component id and validate function
    */
-  render(user:any){
-    this.props.user = user;
-    const renderPromise = this.components.map((component:Component) => {
-      return component._render(user)
+  useFilter(filter:Filter){
+    //for all components
+    if(filter.componentId === "*"){
+      this.components.forEach((component:Component) => {
+        component.useFilter(filter);
+      });
+    
+    //for certain component
+    }else{
+      const component = this.components.find((component:Component) => {
+        return component.id === filter.componentId;
+      });
+      if(component) component.useFilter(filter);
+    }
+  }
+
+  /**
+   * Call render method of all view components with user attributes
+   * @param userAttrs The latest user attributes
+   */
+  render(userAttrs:any){
+    this.userAttrs = userAttrs;
+
+    const renderPromise = this.components
+    .map((component:Component) => {
+      return component._render(userAttrs);
     });
     
     return Promise.all(renderPromise).then(() => {
-      console.log(`view updated : ${this.state.renderCount}`);
+      //console.log(`view updated : ${this.state.renderCount}`);
       this.state.renderCount += 1;
     });
   }

@@ -6,12 +6,19 @@ import Component from "../src/view/component";
 import Filter from "../src/view/filter";
 
 class TestComponent extends Component{
-  id : "test";
+  id = "test";
   render(){}
 }
 
 class TestFilter extends Filter{
-  componentId:"test";
+  componentId = "test";
+  validate(userAttrs:{isTarget:boolean}):boolean{
+    return userAttrs.isTarget;
+  }
+}
+
+class TestFilterForAll extends Filter{
+  componentId = "*";
   validate(userAttrs:{isTarget:boolean}):boolean{
     return userAttrs.isTarget;
   }
@@ -23,11 +30,49 @@ describe("view", () => {
       const view = new View();
       assert(view);
     });
+
+    describe("use and render", () => {
+      it("add a component to a list of them", () => {
+        const view = new View();
+        const component = new Component("test", () => {});
+        view.use(component);
+        assert(view.components[0].id === "test");
+      });
+    });
     
-    describe("use", () => {});
-    describe("import", () => {});
-    describe("useFilter", () => {});
-    describe("render", () => {});
+    describe("import and render", () => {
+      it("build component from id and callback", () => {
+        const view = new View();
+        view.import("test", () => {});
+        assert(view.components[0].id === "test");
+      });
+    });
+    
+    describe("useFilter", () => {
+      it("add filter for all components", () => {
+        const view = new View();
+        const component1 = new Component("test1", () => {});
+        const component2 = new Component("test2", () => {});
+        const filter = new TestFilterForAll();
+        view.use(component1);
+        view.use(component2);
+        view.useFilter(filter);
+        assert.deepEqual(filter, component1.filters[0]);
+        assert.deepEqual(filter, component2.filters[0]);
+      });
+      
+      it("add filter for certain component", () => {
+        const view = new View();
+        const target = new Component("test", () => {});
+        const other = new Component("other", () => {});
+        const filter = new TestFilter();
+        view.use(target);
+        view.use(other);
+        view.useFilter(filter);
+        assert.deepEqual(filter, target.filters[0]);
+        assert(other.filters.length === 0);
+      });
+    });
   });
   
   describe("Component", () => {

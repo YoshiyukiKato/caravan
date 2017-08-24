@@ -31,7 +31,7 @@ describe("view", () => {
       assert(view);
     });
 
-    describe("use and render", () => {
+    describe("use", () => {
       it("add a component to a list of them", () => {
         const view = new View();
         const component = new Component("test", () => {});
@@ -40,7 +40,7 @@ describe("view", () => {
       });
     });
     
-    describe("import and render", () => {
+    describe("import", () => {
       it("build component from id and callback", () => {
         const view = new View();
         view.import("test", () => {});

@@ -1,14 +1,14 @@
 import {UserAttr} from "../../../src";
 
-export interface Profile{
+export interface UserProfile{
   name? : string;
   age? : number;
   sex? : string;
 }
 
-export default class UserProfile extends UserAttr<Profile>{
+export default class Profile extends UserAttr<UserProfile>{
   public name:string = "user-profile";
-  public value:Profile = {};
+  public value:UserProfile = {};
   
   load(){
     this.set({

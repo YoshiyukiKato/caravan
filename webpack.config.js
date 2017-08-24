@@ -1,9 +1,6 @@
 const fs = require("fs-extra");
 const path = require('path');
 const webpack = require('webpack');
-const UglifyJSPlugin = require("uglifyjs-webpack-plugin")
-
-const VERBOSE = process.argv.includes('--verbose');
 
 let entry = {
   "index" : ["./src/index"],
@@ -13,7 +10,7 @@ let entry = {
 module.exports = {
   plugins: [
     new webpack.optimize.AggressiveMergingPlugin(),
-    new UglifyJSPlugin()
+    new webpack.optimize.UglifyJsPlugin()
   ],
   
   entry : entry,

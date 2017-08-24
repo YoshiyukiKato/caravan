@@ -2,8 +2,6 @@ const fs = require("fs");
 const path = require('path');
 const webpack = require('webpack');
 
-const VERBOSE = process.argv.includes('--verbose');
-
 let entry = {};
 
 fs.readdirSync("./example/src").map((file) => {
@@ -52,7 +50,7 @@ module.exports = {
       
       {
         test: /\.(ts|tsx)?$/,
-        loader : ["babel-loader", "ts-loader"],
+        loader : ["ts-loader"],
         exclude : /node_modules/,
         include : [__dirname + "/src", __dirname + "/example"]
       },

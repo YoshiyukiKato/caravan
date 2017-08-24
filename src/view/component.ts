@@ -32,7 +32,7 @@ export default class ViewComponent{
 
       if(isTargetUser) this.render(userAttrs);
     } catch (e) {
-      console.log(e);
+      //console.log(e);
     }
 
     return Promise.resolve(userAttrs)

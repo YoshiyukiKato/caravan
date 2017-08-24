@@ -4,7 +4,7 @@ export type renderFunc = (userAttrs:any) => any;
 
 export default class ViewComponent{
   id:string = "";
-  private filters:Filter[] = [];
+  readonly filters:Filter[] = [];
   private state:any = {};
   
   constructor(id?:string, render?:renderFunc){

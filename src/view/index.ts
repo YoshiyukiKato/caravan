@@ -3,7 +3,7 @@ import Component, {renderFunc} from "./component";
 import Filter from "./filter";
 
 export default class View{
-  private components:Component[] = [];
+  readonly components:Component[] = [];
   private userAttrs:any = {}; 
   private state:any = { renderCount : 0 };
 
@@ -51,7 +51,7 @@ export default class View{
    * Call render method of all view components with user attributes
    * @param userAttrs The latest user attributes
    */
-  render(userAttrs:any){
+  render(userAttrs:any):Promise<any>{
     this.userAttrs = userAttrs;
 
     const renderPromise = this.components

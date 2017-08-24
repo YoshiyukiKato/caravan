@@ -1,7 +1,10 @@
+import Filter from "./filter";
+
 export type renderFunc = (user:any) => any;
 
 export default class ViewComponent{
   id:string = "";
+  private filters:Filter[];
   private state:any = {};
   
   constructor(id?:string, render?:renderFunc){
@@ -10,16 +13,29 @@ export default class ViewComponent{
   }
 
   /**
-   * view 
-   * @param user 
+   * add filter to the list of them. They will be used before redering
+   * @param filter 
    */
-  _render(user:any):Promise<any>{
+  useFilter(filter:Filter){
+    this.filters.push(filter);
+  }
+
+  /**
+   * exec render method if the user is a target
+   * @param userAttrs
+   */
+  _render(userAttrs:any):Promise<any>{
     try {
-      this.render(user);
+      const isTargetUser = this.filters.reduce((acc:boolean, filter:Filter) => {
+        return filter.validate(userAttrs);
+      }, true);
+
+      if(isTargetUser) this.render(userAttrs);
     } catch (e) {
       console.log(e);
     }
-    return Promise.resolve(user)
+
+    return Promise.resolve(userAttrs)
   }
 
   render(user:any){};

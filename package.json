@@ -1,6 +1,6 @@
 {
   "name": "gimmickry",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Web app framework for user driven view rendering.",
   "main": "./dest/index.js",
   "types": "./dest/index.d.ts",

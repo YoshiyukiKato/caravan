@@ -1,21 +1,31 @@
 /// <reference types="bluebird" />
 import * as Promise from "bluebird";
 import Component, { renderFunc } from "./component";
+import Filter from "./filter";
 export default class View {
-    private components;
-    private props;
+    readonly components: Component[];
+    readonly filters: Filter[];
+    private userAttrs;
     private state;
-    constructor();
     /**
-     * 施策のコンポーネントを取り込む
-     * @param id コンポーネントの識別id。施策idなどを入れる
-     * @param _render DOMの生成や更新をする関数。
+     * build component dynamically and use it
+     * @param id unique id of a component
+     * @param _render render function of a component
      */
-    import(id: string, _render: renderFunc): void;
+    import(id: string, render: renderFunc): void;
+    /**
+     * add a view component to the list of them
+     * @param component view component
+     */
     use(component: Component): void;
     /**
-     * userデータを引数に取り、保持するcomponentsすべてのrenderメソッドを呼び出
-     * @param user ユーザ情報。属性情報などを持っている
+     * Distribute a filter to target components
+     * @param filter has component id and validate function
      */
-    render(user: any): Promise<void>;
+    useFilter(filter: Filter): void;
+    /**
+     * Call render method of all view components with user attributes
+     * @param userAttrs The latest user attributes
+     */
+    render(userAttrs: any): Promise<any>;
 }

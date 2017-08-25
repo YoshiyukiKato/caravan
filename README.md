@@ -11,7 +11,7 @@ To provide user-adaptive UI/UX conveniently.
 ## usage
 
 ```ts
-import {App, UserAttr, ViewComponent} from "path/to/Gimmickry";
+import {App, UserAttr, ViewComponent} from "gimmickry";
 
 interface UserProfileSchema{
   name : sting;

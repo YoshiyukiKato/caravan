@@ -86,7 +86,7 @@ An instance of [User](#user) class.
 #### app.view
 An instance of [View](#view) class.
 ### User
-#### User.use([UserAttr](#userAttr));
+#### User.use([UserAttr](#userattr));
 ### UserAttr
 ```ts
 interface UserProfileSchema{
@@ -108,8 +108,8 @@ class UserProfile extends UserAttr<UserProfileSchema>{
 ```
 
 ### View
-#### View.use([ViewComponent](#viewComponent))
-#### View.useFilter([ViewFilter](#viewFilter))
+#### View.use([ViewComponent](#viewcomponent))
+#### View.useFilter([ViewFilter](#viewfilter))
 ### ViewComponent
 ```ts
 interface UserSchema{

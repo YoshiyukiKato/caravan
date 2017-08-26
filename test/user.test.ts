@@ -4,8 +4,24 @@ import UserAttr from "../src/user/attr";
 import * as sinon from "sinon";
 import * as assert from "power-assert";
 
+interface Schema {
+  count: number;
+}
 
-describe("user", () => {
+class TestAttr extends UserAttr<Schema>{
+  name = "test-attr";
+  value = {
+    count: 0
+  };
+
+  load() {
+    this.set({
+      count: 1
+    });
+  }
+  }
+
+describe("User", () => {
   var user;
   it("create new user instance", () => {
     user = new User();
@@ -13,70 +29,23 @@ describe("user", () => {
   });
 
   it("set user attributes", () => {
+    const attr = {
+      key : "value2"
+    };
     const attrs = {
-      attrName : {
-        kay : "value"
-      }
+      attrName : attr
     };
     user.setAttrs(attrs);
-    assert(user.attrs);
+    assert.deepEqual(user.attrs.attrName, attr);
   });
 
-  describe("UserAttr", () => {
-    interface Schema {
-      count : number;
-    }
-
-    class TestAttr extends UserAttr<Schema>{
-      name = "test";
-      value = {
-        count : 0
-      };
-    }
-
-    var attr;
-    it("create new attribute", () => {
-      attr = new TestAttr();
-      assert(attr);
-    });
-
-    it("update attribute value", () => {
-      attr.set({ count : 1 });
-      assert(attr.value.count === 1);
-    });
-
-    it("set callback for when attribute updated", () => {
-      const callback = sinon.spy();
-      attr.onChange(callback);
-      attr.set({});
-      assert(callback.called);
-    });
-
-    it("receive latest attribute value", () => {
-      attr.onChange((attrs:any) => {
-        const value = attrs["test"];
-        assert(value.count === 2);
-      });
-      attr.set({ count : 2 });
-    });
-  });
-
-  interface Schema {
-    count : number;
-  }
-
-  class TestAttr extends UserAttr<Schema>{
-    name = "test-attr";
-    value = {
-      count : 0
+  it("set a user attribute", () => {
+    const attr = {
+      key : "value2"
     };
-    
-    load(){
-      this.set({
-        count : 1
-      });
-    }
-  }
+    user.import("attrName", attr);
+    assert.deepEqual(user.attrs.attrName, attr);
+  });
 
   it("loads attribute data when use", () => {
     const attr = new TestAttr();

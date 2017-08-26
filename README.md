@@ -70,5 +70,78 @@ $ npm run server
 And then, please visit `http://localhost:9000` to see some simple examples.
 Those examples' source are in `example/src` directory.
 
+## API
+### App
+#### App(mode)
+- mode(optional)
+  - `"dev"|"prod"` (default is `"dev"`).
+  - the `dev` mode exports `app.user.import` and `app.view.import` as `window.__import_user__` and `window.__import_view__`.
+
+```ts
+const app = new App(mode);
+```
+
+#### app.user
+An instance of [User](#User) class.
+#### app.view
+An instance of [View](#View) class.
+### User
+#### User.use([UserAttr](#UserAttr));
+### UserAttr
+```ts
+interface UserProfileSchema{
+  name : sting;
+  age : number;
+}
+
+class UserProfile extends UserAttr<UserProfileSchema>{
+  name:string = "profile";
+  value:UserProfileSchema = { name : "", age : 0 };
+  load(){
+    //get value from somewhere like API, cookie, etc.
+    this.set({
+      name : "taro",
+      age : 20
+    });
+  }
+}
+```
+
+### View
+#### View.use([ViewComponent](#ViewComponent))
+#### View.useFilter([ViewFilter](#ViewFilter))
+### ViewComponent
+```ts
+interface UserSchema{
+  profile:UserProfileSchema
+}
+
+class RenderHTML extends ViewComponent{
+  id:string = "render-html";
+  render(user:UserSchema){
+    document.querySelector("#user-profile").innerHTML = `
+      <div>name : ${user.proile.name}</div>
+      <div>age : ${user.proile.age}</div>
+    `;
+  }
+}
+```
+
+### ViewFilter
+```ts
+interface UserSchema{
+  profile:UserProfileSchema
+}
+
+class Only20s extends ViewFilter{
+  componentId:"my-component";
+  validate(userAttrs:UserSchema, componentId:string){
+    const age = userAttrs["user-profile"].age;
+    if(!age) return false;
+    return 20 <= age && age < 30;
+  }
+}
+```
+
 ## LICENSE
 MIT

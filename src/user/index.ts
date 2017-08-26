@@ -17,6 +17,12 @@ export default class User{
     this.attrs = Object.assign(this.attrs, nextAttrs);
     if(!silent) this.callbacks.forEach((cb:callback) => cb(this.attrs));
   }
+  
+  import(id:string, attr:any){
+    let nextAttrs:any = {};
+    nextAttrs[id] = attr;
+    this.setAttrs(nextAttrs);
+  }
 
   onChange(cb:callback):void{
     this.callbacks.push(cb);

@@ -1,7 +1,11 @@
 {
   "name": "gimmickry",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Web app framework for user driven view rendering.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/YoshiyukiKato/gimmickry.git"
+  },
   "main": "./dest/index.js",
   "types": "./dest/index.d.ts",
   "author": "Yoshiyuki Kato",

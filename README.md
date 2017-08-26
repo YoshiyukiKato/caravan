@@ -82,11 +82,11 @@ const app = new App(mode);
 ```
 
 #### app.user
-An instance of [User](#User) class.
+An instance of [User](#user) class.
 #### app.view
-An instance of [View](#View) class.
+An instance of [View](#view) class.
 ### User
-#### User.use([UserAttr](#UserAttr));
+#### User.use([UserAttr](#userAttr));
 ### UserAttr
 ```ts
 interface UserProfileSchema{
@@ -108,8 +108,8 @@ class UserProfile extends UserAttr<UserProfileSchema>{
 ```
 
 ### View
-#### View.use([ViewComponent](#ViewComponent))
-#### View.useFilter([ViewFilter](#ViewFilter))
+#### View.use([ViewComponent](#viewComponent))
+#### View.useFilter([ViewFilter](#viewFilter))
 ### ViewComponent
 ```ts
 interface UserSchema{

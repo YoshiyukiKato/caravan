@@ -19,7 +19,7 @@ class TestAttr extends UserAttr<Schema>{
       count: 1
     });
   }
-  }
+}
 
 describe("User", () => {
   var user;
@@ -28,23 +28,39 @@ describe("User", () => {
     assert(user);
   });
 
-  it("set user attributes", () => {
-    const attr = {
-      key : "value2"
-    };
-    const attrs = {
-      attrName : attr
-    };
-    user.setAttrs(attrs);
-    assert.deepEqual(user.attrs.attrName, attr);
-  });
+  describe("set user attributes", () => {
+    it("set user attributes", () => {
+      const attr = {
+        key : "value1"
+      };
+      const attrs = {
+        attrName : attr
+      };
+      user.setAttrs(attrs);
+      assert.deepEqual(user.attrs.attrName, attr);
+    });
 
-  it("set a user attribute", () => {
-    const attr = {
-      key : "value2"
-    };
-    user.import("attrName", attr);
-    assert.deepEqual(user.attrs.attrName, attr);
+    it("set a user attribute", () => {
+      const attr = {
+        key: "value2"
+      };
+      user.import("attrName", attr);
+      assert.deepEqual(user.attrs.attrName, attr);
+    });
+
+    it("set callback for when attributes changed", () => {
+      const callback = sinon.spy();
+      user.onChange(callback);
+      user.setAttrs({});
+      assert(callback.called);
+    });
+
+    it("set user attributes without no exec callback", () => {
+      const callback = sinon.spy();
+      user.onChange(callback);
+      user.setAttrs({}, true);
+      assert(!callback.called);
+    });
   });
 
   it("loads attribute data when use", () => {

@@ -34,6 +34,13 @@ describe("UserAttr", () => {
     assert(callback.called);
   });
 
+  it("update attribute value without exec callback", () => {
+    const callback = sinon.spy();
+    attr.onChange(callback);
+    attr.set({}, true);
+    assert(!callback.called);
+  });
+
   it("receive latest attribute value", () => {
     attr.onChange((attrs: any) => {
       const value = attrs["test"];

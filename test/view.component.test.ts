@@ -24,25 +24,13 @@ class TestFilterForAll extends Filter{
 
 describe("Component", () => {
   describe("create new item", () => {
-    context("statically declare a component class", () => {
-      it("passes", () => {
-        class TestComponent extends Component {
-          id = "test";
-          render() { }
-        }
-        const component = new TestComponent();
-        assert(component);
-      });
-    });
-
-    context("dynamically give id and render function", () => {
-      it("has given id and render function as its properties", () => {
-        const id = "test";
-        const render = (userAttrs: any) => { }
-        const component = new Component(id, render);
-        assert(component.id === id);
-        assert(component.render === render);
-      });
+    it("passes", () => {
+      class TestComponent extends Component {
+        id = "test";
+        render() { }
+      }
+      const component = new TestComponent();
+      assert(component);
     });
   });
 
@@ -59,7 +47,13 @@ describe("Component", () => {
     context("without filters", () => {
       it("calls render for any user attributes", () => {
         const callback = sinon.spy();
-        const component = new Component("test", callback);
+        class TestComponent extends Component{
+          id = "test";
+          render(){
+            callback();
+          }
+        }
+        const component = new TestComponent();
         const userAttrs = {};
         return component._render(userAttrs)
           .then(() => {
@@ -72,7 +66,13 @@ describe("Component", () => {
       const filter = new TestFilter();
       it("calls render with user attributes satisfied with the filter's condition", () => {
         const callback = sinon.spy();
-        const component = new Component("test", callback);
+        class TestComponent extends Component{
+          id = "test";
+          render(){
+            callback();
+          }
+        }
+        const component = new TestComponent();
         component.useFilter(filter);
         const userAttrs = {
           isTarget: true
@@ -86,7 +86,13 @@ describe("Component", () => {
 
       it("does not call render with user attributes not satisfied with the filter's condition", () => {
         const callback = sinon.spy();
-        const component = new Component("test", callback);
+        class TestComponent extends Component{
+          id = "test";
+          render(){
+            callback();
+          }
+        }
+        const component = new TestComponent();
         component.useFilter(filter);
         const userAttrs = {
           isTarget: false
@@ -101,8 +107,13 @@ describe("Component", () => {
 
     context("error orrured in a render method of a component", () => {
       it("does not throw it", () => {
-        const callback = () => { throw new Error("This is error for Test. No problem ;)"); };
-        const component = new Component("test", callback);
+        class TestComponent extends Component{
+          id = "test";
+          render(){
+            throw new Error("This is error for Test. No problem ;)");
+          }
+        }
+        const component = new TestComponent();
         const userAttrs = {};
         return component._render(userAttrs)
           .then(() => {

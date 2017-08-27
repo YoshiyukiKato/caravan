@@ -1,17 +1,10 @@
 import Filter from "./filter";
 
-export type renderFunc = (userAttrs:any) => any;
-
 export default class ViewComponent{
   id:string = "";
   readonly filters:Filter[] = [];
   private state:any = {};
   
-  constructor(id?:string, render?:renderFunc){
-    if(id) this.id = id;
-    if(render) this.render = render;
-  }
-
   /**
    * add filter to the list of them. They will be used before redering
    * @param filter 

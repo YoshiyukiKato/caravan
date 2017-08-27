@@ -16,22 +16,6 @@ class TestAttr extends UserAttr<Schema>{
 }
 
 describe("UserAttr", () => {
-  describe("create new instance", () => {
-    context("new from class definition", () => {
-      it("passes", () => {
-        const attr = new TestAttr();
-        assert(attr);
-      });
-    });
-    
-    context("new with paramters", () => {
-      it("passes", () => {
-        const attr = new UserAttr<any>("test", {});
-        assert(attr);
-      });
-    });
-  });
-
   describe("uptate value", () => {
     it("set next value", () => {
       const attr = new TestAttr();

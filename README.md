@@ -19,9 +19,9 @@ interface UserProfileSchema{
 }
 
 class UserProfile extends UserAttr<UserProfileSchema>{
-  name:string = "profile";
+  id:string = "profile";
   value:UserProfileSchema = { name : "", age : 0 };
-  load(){
+  init(){
     //get value from somewhere like API, cookie, etc.
     this.set({
       name : "taro",
@@ -95,9 +95,9 @@ interface UserProfileSchema{
 }
 
 class UserProfile extends UserAttr<UserProfileSchema>{
-  name:string = "profile";
+  id:string = "profile";
   value:UserProfileSchema = { name : "", age : 0 };
-  load(){
+  init(){
     //get value from somewhere like API, cookie, etc.
     this.set({
       name : "taro",
@@ -136,7 +136,7 @@ interface UserSchema{
 class Only20s extends ViewFilter{
   componentId:"my-component";
   validate(userAttrs:UserSchema, componentId:string){
-    const age = userAttrs["user-profile"].age;
+    const age = userAttrs["profile"].age;
     if(!age) return false;
     return 20 <= age && age < 30;
   }

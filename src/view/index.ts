@@ -64,7 +64,6 @@ export default class View{
     });
     
     return Promise.all(renderPromise).then(() => {
-      //console.log(`view updated : ${this.state.renderCount}`);
       this.state.renderCount += 1;
     });
   }

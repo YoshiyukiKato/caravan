@@ -7,10 +7,10 @@ export interface UserProfile{
 }
 
 export default class Profile extends UserAttr<UserProfile>{
-  public name:string = "user-profile";
+  public id:string = "profile";
   public value:UserProfile = {};
   
-  load(){
+  init(){
     this.set({
       name : "taro",
       age : 20,

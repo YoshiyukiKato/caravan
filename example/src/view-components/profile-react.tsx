@@ -15,7 +15,7 @@ class App extends React.Component<AppProps, any>{
   }
   
   render(){
-    const profile = this.props.userAttrs["user-profile"];
+    const profile = this.props.userAttrs["profile"];
     return <div>
       <h1>User info</h1>
       <div>name : {profile.name}</div>

@@ -12,7 +12,7 @@ function renderUserInfo(name:any,age:any,sex:any){
 export default class ProfileHTML extends ViewComponent{
   id : "user-html";
   render(user:any){
-    const profile = user["user-profile"];
+    const profile = user["profile"];
     if (profile) {
       const html = renderUserInfo(profile.name, profile.age, profile.sex);
       const box = document.querySelector("#user-profile");

@@ -1,7 +1,6 @@
 import UserAttr, {callback} from "./attr";
 
-type loadFunc = (this:UserAttr<any>) => any;
-type watchFunc = (this:UserAttr<any>) => any;
+export type initFunc = (this:UserAttr<any>) => any;
 
 export default class User{
   public attrs: any = {};
@@ -12,18 +11,16 @@ export default class User{
   use(attr:UserAttr<any>){
     this.attrs[attr.id] = attr.value;
     attr.onChange(this.setAttrs.bind(this));
-    attr.load();
-    attr.watch();
+    attr.init();
   }
 
-  import(id:string, value:any, load?:loadFunc, watch?:watchFunc){
+  import(id:string, value:any, init?:initFunc){
     class Attr extends UserAttr<any>{
       id = id;
       value = value;
     }
     const attr = new Attr();
-    if(load) attr.load = load.bind(attr);
-    if(watch) attr.watch = watch.bind(attr);
+    if(init) attr.init = init.bind(attr);
     this.use(attr);
   }
 

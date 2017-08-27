@@ -18,6 +18,5 @@ export default class UserAttr<T>{
     this.callback = callback;
   }
 
-  load(){};
-  watch(){};
+  init(){}
 }

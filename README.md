@@ -75,7 +75,10 @@ Those examples' source are in `example/src` directory.
 #### App(mode)
 - mode(optional)
   - `"dev"|"prod"` (default is `"dev"`).
-  - the `dev` mode exports `app.user.import` and `app.view.import` as `window.__import_user__` and `window.__import_view__`.
+  - the `dev` mode exports following methods to global scope
+    - `app.user.setAttrs` => `window.__import_user_attrs_value_`
+    - `app.user.import` => `window.__import_user_attr_`
+    - `app.view.import` => `window.__import_view_component`
 
 ```ts
 const app = new App(mode);
@@ -87,6 +90,8 @@ An instance of [User](#user) class.
 An instance of [View](#view) class.
 ### User
 #### User.use([UserAttr](#userattr));
+#### User.import(attrName, attrValue, attrInitFunction);
+#### User.setAttrs(attrs);
 ### UserAttr
 ```ts
 interface UserProfileSchema{
@@ -107,8 +112,10 @@ class UserProfile extends UserAttr<UserProfileSchema>{
 }
 ```
 
+#### UserAttr.init()
 ### View
 #### View.use([ViewComponent](#viewcomponent))
+#### View.import(componentId, renderFunction)
 #### View.useFilter([ViewFilter](#viewfilter))
 ### ViewComponent
 ```ts
@@ -126,7 +133,7 @@ class RenderHTML extends ViewComponent{
   }
 }
 ```
-
+#### ViewComponent.render(user)
 ### ViewFilter
 ```ts
 interface UserSchema{
@@ -142,6 +149,6 @@ class Only20s extends ViewFilter{
   }
 }
 ```
-
+#### ViewFilter.validate()
 ## LICENSE
 MIT

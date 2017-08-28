@@ -76,9 +76,9 @@ Those examples' source are in `example/src` directory.
 - mode(optional)
   - `"dev"|"prod"` (default is `"dev"`).
   - the `dev` mode exports following methods to global scope
-    - `app.user.setAttrs` => `window.__import_user_attrs_value_`
-    - `app.user.import` => `window.__import_user_attr_`
-    - `app.view.import` => `window.__import_view_component`
+    - `app.user.setAttrs` => `window.__import_user_attrs_value__`
+    - `app.user.import` => `window.__import_user_attr__`
+    - `app.view.import` => `window.__import_view_component__`
 
 ```ts
 const app = new App(mode);
@@ -89,9 +89,19 @@ An instance of [User](#user) class.
 #### app.view
 An instance of [View](#view) class.
 ### User
-#### User.use([UserAttr](#userattr));
-#### User.import(attrName, attrValue, attrInitFunction);
-#### User.setAttrs(attrs);
+#### User.use(userAttr)
+##### params :
+- userAttr : [UserAttr](#userattr)
+#### User.import(attrName, attrValue, attrInitFunction)
+##### params :
+- attrName : string
+- attrValue : any
+- attrInitFunction : () => any
+#### User.setAttrs(attrs)
+##### params :
+- attrs : any
+##### return : boolean
+
 ### UserAttr
 ```ts
 interface UserProfileSchema{
@@ -114,9 +124,17 @@ class UserProfile extends UserAttr<UserProfileSchema>{
 
 #### UserAttr.init()
 ### View
-#### View.use([ViewComponent](#viewcomponent))
+#### View.use(viewComponent)
+##### params : 
+- viewComponent : [ViewComponent](#viewcomponent)
+#### View.useFilter(viewFilter)
+##### params : 
+- viewFilter : [ViewFilter](#viewfilter)
 #### View.import(componentId, renderFunction)
-#### View.useFilter([ViewFilter](#viewfilter))
+##### params :
+- componentId : string
+- renderFunction : (userAttrs) => any
+  - userAttrs : any
 ### ViewComponent
 ```ts
 interface UserSchema{
@@ -133,7 +151,9 @@ class RenderHTML extends ViewComponent{
   }
 }
 ```
-#### ViewComponent.render(user)
+#### ViewComponent.render(userAttrs)
+##### params : 
+- userAttrs : any
 ### ViewFilter
 ```ts
 interface UserSchema{
@@ -149,6 +169,9 @@ class Only20s extends ViewFilter{
   }
 }
 ```
-#### ViewFilter.validate()
+#### ViewFilter.validate(userAttrs, componentId)
+##### params : 
+- userAttrs : any
+- componentId : string
 ## LICENSE
 MIT

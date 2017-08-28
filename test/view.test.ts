@@ -11,7 +11,7 @@ class TestComponent extends Component{
 }
 
 class TestFilter extends Filter{
-  componentId = "test";
+  componentId = "target";
   validate(userAttrs:{isTarget:boolean}):boolean{
     return userAttrs.isTarget;
   }
@@ -25,10 +25,16 @@ class TestFilterForAll extends Filter{
 
 describe("View", () => {
   describe("#use : add a component to a list of them", () => {
-    it("", () => {
+    it("passes", () => {
       const view = new View();
       const callback = sinon.spy();
-      const component = new Component("test", callback);
+      class TestComponent extends Component {
+        id = "test";
+        render() {
+          callback();
+        }
+      }
+      const component = new TestComponent();
       view.use(component);
       assert(view.components[0].id === "test");
       assert(callback.called);
@@ -48,14 +54,12 @@ describe("View", () => {
       context("a filter for all components", () => {
         it("is applied to all components", () => {
           const view = new View();
-          const component1 = new Component("test1", () => { });
-          const component2 = new Component("test2", () => { });
           const filter = new TestFilterForAll();
-          view.use(component1);
-          view.use(component2);
+          view.import("test1", () => {});
+          view.import("test2", () => {});
           view.useFilter(filter);
-          assert.deepEqual(filter, component1.filters[0]);
-          assert.deepEqual(filter, component2.filters[0]);
+          assert.deepEqual(filter, view.components[0].filters[0]);
+          assert.deepEqual(filter, view.components[1].filters[0]);
         });
       });
 
@@ -64,17 +68,16 @@ describe("View", () => {
 
         it("is used by the target component", () => {
           const view = new View();
-          const target = new Component("test", () => { });
-          view.use(target);
+          view.import("target", () => {});
           view.useFilter(filter);
-          assert.deepEqual(filter, target.filters[0]);
+          assert.deepEqual(filter, view.components[0].filters[0]);
         });
+
         it("is not used by another component", () => {
           const view = new View();
-          const other = new Component("other", () => { });
-          view.use(other);
+          view.import("other", () => {});
           view.useFilter(filter);
-          assert(other.filters.length === 0);
+          assert(view.components[0].filters.length === 0);
         });
       });
     });
@@ -84,18 +87,16 @@ describe("View", () => {
         const view = new View();
         const filter = new TestFilter();
         view.useFilter(filter);
-        const target = new Component("test", () => {});
-        view.use(target);
-        assert.deepEqual(filter, target.filters[0]);
+        view.import("target", () => {});
+        assert.deepEqual(filter, view.components[0].filters[0]);
       });
       
       it("is not applied when a not target component added", () => {
         const view = new View();
         const filter = new TestFilter();
         view.useFilter(filter);
-        const other = new Component("other", () => {});
-        view.use(other);
-        assert(!other.filters[0]);
+        view.import("other", () => {});
+        assert(!view.components[0].filters[0]);
       });
     });
   });
@@ -105,10 +106,8 @@ describe("View", () => {
       const view = new View();
       const callback1 = sinon.spy();
       const callback2 = sinon.spy();
-      const component1 = new Component("test1", callback1);
-      const component2 = new Component("test2", callback2);
-      view.use(component1);
-      view.use(component2);
+      view.import("test1", callback1);
+      view.import("test2", callback2);
       return view.render({}).then(() => {
         assert(callback1.called);
         assert(callback2.called);

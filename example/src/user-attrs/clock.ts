@@ -5,12 +5,12 @@ export interface UserClock{
 }
 
 export default class Clock extends UserAttr<UserClock>{
-  public name:string = "clock";
+  public id:string = "clock";
   public value:UserClock = {
     time : new Date()
   }
   
-  watch(){
+  init(){
     setInterval(() => {
       this.set({
         time : new Date()

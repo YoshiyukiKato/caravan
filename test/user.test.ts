@@ -14,7 +14,7 @@ class TestAttr extends UserAttr<Schema>{
     count: 0
   };
 
-  load() {
+  init(){
     this.set({
       count: 1
     });
@@ -22,14 +22,14 @@ class TestAttr extends UserAttr<Schema>{
 }
 
 describe("User", () => {
-  var user;
   it("create new user instance", () => {
-    user = new User();
+    const user = new User();
     assert(user);
   });
 
-  describe("set user attributes", () => {
-    it("set user attributes", () => {
+  describe("set attrs value", () => {
+    it("passes", () => {
+      const user = new User();
       const attr = {
         key : "value1"
       };
@@ -40,15 +40,8 @@ describe("User", () => {
       assert.deepEqual(user.attrs.attrName, attr);
     });
 
-    it("set a user attribute", () => {
-      const attr = {
-        key: "value2"
-      };
-      user.import("attrName", attr);
-      assert.deepEqual(user.attrs.attrName, attr);
-    });
-
     it("set callback for when attributes changed", () => {
+      const user = new User();
       const callback = sinon.spy();
       user.onChange(callback);
       user.setAttrs({});
@@ -56,6 +49,7 @@ describe("User", () => {
     });
 
     it("set user attributes without no exec callback", () => {
+      const user = new User();
       const callback = sinon.spy();
       user.onChange(callback);
       user.setAttrs({}, true);
@@ -63,7 +57,29 @@ describe("User", () => {
     });
   });
 
+  describe("build an attr from arguments", () => {
+    it("build with a default value", () => {
+      const user = new User();
+      const attr = {
+        key: "value"
+      };
+      user.import("attrName", attr);
+      assert.deepEqual(user.attrs.attrName, attr);
+    });
+
+    it("build with an init method", () => {
+      const user = new User();
+      const attr = { key : "value" };
+      const load = function(this:UserAttr<any>){
+        this.set(attr);
+      };
+      user.import("attrName", {}, load);
+      assert.deepEqual(user.attrs.attrName, attr);
+    });
+  });
+
   it("loads attribute data when use", () => {
+    const user = new User();
     const attr = new TestAttr();
     user.use(attr);
     user.onChange((attrs:any) => {

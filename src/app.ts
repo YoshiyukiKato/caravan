@@ -1,11 +1,12 @@
 import Promise from "bluebird";
-import User from "./user";
-import View from "./view";
+import User,{initFunc} from "./user";
+import View,{renderFunc} from "./view";
 
 declare global{
   interface Window{
-    __importView__ : (id:string, render:(user:any) => any) => any;
-    __importUser__ : (user:any) => any;
+    __import_view_component__ : (id:string, render:(user:any) => any) => any;
+    __import_user_attrs_value__ : (user:any) => any;
+    __import_user_attr__ : (user:any) => any;
   }
 }
 
@@ -22,17 +23,23 @@ export default class App{
     this.user.onChange((user:User) => { return this.view.render(user); });
     this.mode = mode;
     if(this.mode === "dev"){
-      window.__importView__ = this.__importView__.bind(this);
-      window.__importUser__ = this.__importUser__.bind(this);
+      window.__import_view_component__ = this.__import_view_component__.bind(this);
+      window.__import_user_attr__ = this.__import_user_attr__.bind(this);
+      window.__import_user_attrs_value__ = this.__import_user_attrs_value__.bind(this);
     }
   }
 
   //開発モード用機能
-  __importUser__(attrs:any){
+  __import_user_attrs_value__(attrs:any){
     this.user.setAttrs(attrs);
   }
-  
-  __importView__(id:string, render:(user:any) => any){
+
+  __import_user_attr__(id:string, value:any, init:initFunc){
+    const devId = `dev-${id}`;
+    this.user.import(devId, value, init);
+  }
+
+  __import_view_component__(id:string, render:renderFunc){
     const devId = `dev-${id}`;
     this.view.import(devId, render);
   }

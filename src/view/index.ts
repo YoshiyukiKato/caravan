@@ -1,9 +1,11 @@
 import * as Promise from "bluebird";
-import Component, {renderFunc} from "./component";
+import ViewComponent from "./component";
 import Filter from "./filter";
 
+export type renderFunc = (userAttrs:any) => any;
+
 export default class View{
-  readonly components:Component[] = [];
+  readonly components:ViewComponent[] = [];
   readonly filters:Filter[] = [];
   private userAttrs:any = {}; 
   private state:any = { renderCount : 0 };
@@ -14,7 +16,11 @@ export default class View{
    * @param _render render function of a component
    */
   import(id:string, render:renderFunc){
-    const component = new Component(id, render);
+    class Component extends ViewComponent{
+      id = id;
+    }
+    const component = new Component();
+    component.render = render.bind(this);
     this.use(component);
   }
 
@@ -22,7 +28,7 @@ export default class View{
    * add a view component to the list of them
    * @param component view component
    */
-  use(component:Component){
+  use(component:ViewComponent){
     this.components.push(component);
     this.filters.forEach((filter:Filter) => {
       if(!filter.componentId || component.id === filter.componentId){
@@ -40,11 +46,11 @@ export default class View{
   useFilter(filter:Filter){
     this.filters.push(filter);
     if(!filter.componentId){
-      this.components.forEach((component:Component) => {
+      this.components.forEach((component:ViewComponent) => {
         component.useFilter(filter);
       });
     }else{
-      const component = this.components.find((component:Component) => {
+      const component = this.components.find((component:ViewComponent) => {
         return component.id === filter.componentId;
       });
       if(component) component.useFilter(filter);
@@ -59,12 +65,11 @@ export default class View{
     this.userAttrs = userAttrs;
 
     const renderPromise = this.components
-    .map((component:Component) => {
+    .map((component:ViewComponent) => {
       return component._render(userAttrs);
     });
     
     return Promise.all(renderPromise).then(() => {
-      //console.log(`view updated : ${this.state.renderCount}`);
       this.state.renderCount += 1;
     });
   }

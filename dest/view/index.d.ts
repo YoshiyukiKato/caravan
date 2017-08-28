@@ -1,9 +1,10 @@
 /// <reference types="bluebird" />
 import * as Promise from "bluebird";
-import Component, { renderFunc } from "./component";
+import ViewComponent from "./component";
 import Filter from "./filter";
+export declare type renderFunc = (userAttrs: any) => any;
 export default class View {
-    readonly components: Component[];
+    readonly components: ViewComponent[];
     readonly filters: Filter[];
     private userAttrs;
     private state;
@@ -17,7 +18,7 @@ export default class View {
      * add a view component to the list of them
      * @param component view component
      */
-    use(component: Component): void;
+    use(component: ViewComponent): void;
     /**
      * Distribute a filter to target components
      * @param filter has component id and validate function

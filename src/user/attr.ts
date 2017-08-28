@@ -1,18 +1,15 @@
 export type callback = (value:any) => any;
 
-export default abstract class UserAttr<T>{
-  public abstract name:string;
-  public abstract value:T;
-  private callback:callback = (change:any) => {};
-  
-  load(){}
-  watch(){}
+export default class UserAttr<T>{
+  public id:string;
+  public value:T;
+  private callback?:callback = (change:any) => {};
 
   set(nextValue:any, silent:boolean=false){
     this.value = Object.assign(this.value, nextValue);
-    if(!silent){
+    if(!silent && this.callback){
       let attr:any = {};
-      attr[this.name] = this.value;
+      attr[this.id] = this.value;
       this.callback(attr);
     }
   }
@@ -20,4 +17,6 @@ export default abstract class UserAttr<T>{
   onChange(callback:callback){
     this.callback = callback;
   }
+
+  init(){}
 }

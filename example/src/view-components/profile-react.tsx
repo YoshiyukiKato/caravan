@@ -5,7 +5,7 @@ import {ViewComponent} from "../../../src";
 
 interface AppProps{
   userAttrs : {
-    "user-profile" : UserProfile;
+    "profile" : UserProfile;
   };
 }
 

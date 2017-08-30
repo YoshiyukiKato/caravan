@@ -10,6 +10,9 @@ To provide user-adaptive UI/UX conveniently.
 - stateful user attributes
 - small and encapsulated view component
 
+## architecture
+<img width="400px" src="https://github.com/YoshiyukiKato/gimmickry/blob/develop/assets/architecture.png?raw=true"/>
+
 ## usage
 
 ```ts

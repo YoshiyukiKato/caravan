@@ -42,7 +42,7 @@ describe("app", () => {
     describe("__import_user_attr__", () => {
       it("is alias of app.user.import", () => {
         const attr = { key : "value" };
-        app.__import_user_attr__("test", attr, () => {});
+        app.__import_user_attr__("test", attr);
         assert.deepEqual(app.user.attrs["dev-test"], attr);
       });
       it("exists __import_user_attr__", () => {

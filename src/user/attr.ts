@@ -18,5 +18,7 @@ export default class UserAttr<T>{
     this.callback = callback;
   }
 
-  init(){}
+  init(){
+    if(this.value) this.set(this.value);
+  }
 }

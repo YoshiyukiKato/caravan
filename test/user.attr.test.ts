@@ -16,6 +16,29 @@ class TestAttr extends UserAttr<Schema>{
 }
 
 describe("UserAttr", () => {
+  describe("init", () => {
+    context("with default value", () => {
+      it("emit change event ", () => {
+        const attr = new TestAttr();
+        const callback = sinon.spy();
+        attr.onChange(callback);
+        attr.init();
+        assert(callback.called);
+      });
+    });
+    
+    context("without default value", () => {
+      class Attr extends UserAttr<any>{ id = "attr"; }
+      it("emit change event ", () => {
+        const attr = new Attr();
+        const callback = sinon.spy();
+        attr.onChange(callback);
+        attr.init();
+        assert(!callback.called);
+      });
+    });
+  });
+
   describe("uptate value", () => {
     it("set next value", () => {
       const attr = new TestAttr();

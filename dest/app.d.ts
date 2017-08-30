@@ -15,6 +15,6 @@ export default class App {
     mode: Mode;
     constructor(mode?: Mode);
     __import_user_attrs_value__(attrs: any): void;
-    __import_user_attr__(id: string, value: any, init: initFunc): void;
+    __import_user_attr__(id: string, value: any, init?: initFunc): void;
     __import_view_component__(id: string, render: renderFunc): void;
 }

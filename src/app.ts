@@ -34,7 +34,7 @@ export default class App{
     this.user.setAttrs(attrs);
   }
 
-  __import_user_attr__(id:string, value:any, init:initFunc){
+  __import_user_attr__(id:string, value:any, init?:initFunc){
     const devId = `dev-${id}`;
     this.user.import(devId, value, init);
   }

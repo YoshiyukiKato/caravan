@@ -9,8 +9,8 @@ export default class User{
   constructor(){}
   
   use(attr:UserAttr<any>){
-    this.attrs[attr.id] = attr.value;
     attr.onChange(this.setAttrs.bind(this));
+    //this.attrs[attr.id] = attr.value;
     attr.init();
   }
 

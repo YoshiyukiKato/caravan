@@ -1,8 +1,9 @@
-<div style="text-align:center;">
-  <img width="100px" src="https://github.com/YoshiyukiKato/gimmickry/blob/develop/assets/icon.png?raw=true">
-</div>
-
-![CircleCI](https://circleci.com/gh/YoshiyukiKato/gimmickry.svg?style=svg&circle-token=ad80c18e26e2d967c5d170b018531ec968466f27) [![codecov](https://codecov.io/gh/YoshiyukiKato/gimmickry/branch/master/graph/badge.svg)](https://codecov.io/gh/YoshiyukiKato/gimmickry)
+<p align="center">
+  <img width="50px" src="https://github.com/YoshiyukiKato/gimmickry/blob/develop/assets/icon.png?raw=true">
+</p>
+<p align="center">
+<img src="https://circleci.com/gh/YoshiyukiKato/gimmickry.svg?style=svg&circle-token=ad80c18e26e2d967c5d170b018531ec968466f27"/><img src="https://codecov.io/gh/YoshiyukiKato/gimmickry/branch/master/graph/badge.svg)](https://codecov.io/gh/YoshiyukiKato/gimmickry"/>
+</p>
 
 # Gimmickry
 > Gimmick: a function adapts UI/UX for a user according to his/her attributes.
@@ -114,7 +115,7 @@ An instance of [View](#view) class.
 ### UserAttr
 ```ts
 interface UserProfileSchema{
-  name : sting;
+  id : sting;
   age : number;
 }
 

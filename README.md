@@ -1,3 +1,7 @@
+<div style="text-align:center;">
+  <img width="100px" src="https://github.com/YoshiyukiKato/gimmickry/blob/develop/assets/icon.png?raw=true">
+</div>
+
 ![CircleCI](https://circleci.com/gh/YoshiyukiKato/gimmickry.svg?style=svg&circle-token=ad80c18e26e2d967c5d170b018531ec968466f27) [![codecov](https://codecov.io/gh/YoshiyukiKato/gimmickry/branch/master/graph/badge.svg)](https://codecov.io/gh/YoshiyukiKato/gimmickry)
 
 # Gimmickry

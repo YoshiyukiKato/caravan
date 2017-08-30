@@ -15,7 +15,7 @@
     "build": "$(npm bin)/webpack --config webpack.config.js",
     "test": "$(npm bin)/nyc $(npm bin)/mocha test/**/*.test.ts",
     "server": "$(npm bin)/webpack-dev-server --config webpack-server.config.js --watch --debug",
-    "report-coverage" : "$(npm bin)/nyc report --reporter=text-lcov > coverage.lcov && codecov"
+    "report-coverage": "$(npm bin)/nyc report --reporter=text-lcov > coverage.lcov && codecov"
   },
   "nyc": {
     "include": [
@@ -52,6 +52,7 @@
     "babel-preset-es2017": "^6.22.0",
     "babel-preset-react": "^6.23.0",
     "babel-register": "^6.24.1",
+    "codecov": "^2.3.0",
     "css-loader": "^0.28.0",
     "espower-typescript": "^8.0.0",
     "istanbul": "^0.4.5",

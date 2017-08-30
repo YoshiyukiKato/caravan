@@ -23,12 +23,8 @@ class TestFilterForAll extends Filter{
 }
 
 describe("Component", () => {
-  describe("create new item", () => {
+  describe("render", () => {
     it("passes", () => {
-      class TestComponent extends Component {
-        id = "test";
-        render() { }
-      }
       const component = new TestComponent();
       assert(component);
     });
@@ -39,11 +35,21 @@ describe("Component", () => {
       const component = new TestComponent();
       const filter = new TestFilter();
       component.useFilter(filter);
-      assert(component);
+      assert.deepEqual(component.filters[0], filter);
     });
   });
 
   describe("#render", () => {
+    it("default render method throws error", () => {
+      assert.throws(() => {
+        class TestComponent extends Component{
+          id = "test"
+        };
+        const component = new TestComponent();
+        component.render({});
+      });
+    });
+    
     context("without filters", () => {
       it("calls render for any user attributes", () => {
         const callback = sinon.spy();

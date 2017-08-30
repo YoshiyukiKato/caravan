@@ -32,5 +32,7 @@ export default class ViewComponent{
     return Promise.resolve(userAttrs)
   }
 
-  render(user:any){};
+  render(user:any){
+    throw new Error("render method is not defined")
+  };
 }

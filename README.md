@@ -2,7 +2,7 @@
   <img width="50px" src="https://github.com/YoshiyukiKato/gimmickry/blob/develop/assets/icon.png?raw=true">
 </p>
 <p align="center">
-<img src="https://circleci.com/gh/YoshiyukiKato/gimmickry.svg?style=svg&circle-token=ad80c18e26e2d967c5d170b018531ec968466f27"/><img src="https://codecov.io/gh/YoshiyukiKato/gimmickry/branch/master/graph/badge.svg)](https://codecov.io/gh/YoshiyukiKato/gimmickry"/>
+<img src="https://circleci.com/gh/YoshiyukiKato/gimmickry.svg?style=svg&circle-token=ad80c18e26e2d967c5d170b018531ec968466f27"/><img src="https://codecov.io/gh/YoshiyukiKato/gimmickry/branch/master/graph/badge.svg"/>
 </p>
 
 # Gimmickry

@@ -11,7 +11,7 @@ To provide user-adaptive UI/UX conveniently.
 - small and encapsulated view component
 
 ## architecture
-<img width="400px" src="https://github.com/YoshiyukiKato/gimmickry/blob/develop/assets/architecture.png?raw=true"/>
+<img width="500px" src="https://github.com/YoshiyukiKato/gimmickry/blob/develop/assets/architecture.png?raw=true"/>
 
 ## usage
 

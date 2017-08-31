@@ -3,13 +3,16 @@
 </p>
 <p align="center">
 <a href="https://circleci.com/gh/YoshiyukiKato/gimmickry">
-  <img src="https://circleci.com/gh/YoshiyukiKato/gimmickry.svg?style=svg"/>
+  <img src="https://circleci.com/gh/YoshiyukiKato/gimmickry.svg?style=shield" alt="circleci"/>
 </a>
 <a href="https://codecov.io/gh/YoshiyukiKato/gimmickry">
-  <img src="https://codecov.io/gh/YoshiyukiKato/gimmickry/branch/master/graph/badge.svg" alt="Codecov" />
+  <img src="https://codecov.io/gh/YoshiyukiKato/gimmickry/branch/master/graph/badge.svg" alt="Codecov"/>
 </a>
 <a href="https://codebeat.co/projects/github-com-yoshiyukikato-gimmickry-master">
-  <img alt="codebeat badge" src="https://codebeat.co/badges/bd73ffcb-ce9a-43c9-8d30-d79dcf3c11f1" />
+  <img alt="codebeat badge" src="https://codebeat.co/badges/bd73ffcb-ce9a-43c9-8d30-d79dcf3c11f1" alt="codebeat"/>
+</a>
+<a href="https://www.npmjs.com/package/gimmickry">
+  <img src="https://img.shields.io/npm/v/npm.svg" alt="npm"/>
 </a>
 </p>
 

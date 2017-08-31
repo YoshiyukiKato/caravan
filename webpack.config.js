@@ -17,7 +17,7 @@ module.exports = {
   output: {
     publicPath: '/',
     sourcePrefix: '',
-    path: __dirname + "/dest",
+    path: __dirname + "/dist",
     filename: '[name].js',
     libraryTarget: "umd"
   },

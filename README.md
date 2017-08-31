@@ -2,7 +2,15 @@
   <img width="50px" src="https://github.com/YoshiyukiKato/gimmickry/blob/develop/assets/icon.png?raw=true">
 </p>
 <p align="center">
-<img src="https://circleci.com/gh/YoshiyukiKato/gimmickry.svg?style=svg&circle-token=ad80c18e26e2d967c5d170b018531ec968466f27"/><img src="https://codecov.io/gh/YoshiyukiKato/gimmickry/branch/master/graph/badge.svg"/>
+<a href="https://circleci.com/gh/YoshiyukiKato/gimmickry">
+  <img src="https://circleci.com/gh/YoshiyukiKato/gimmickry.svg?style=svg"/>
+</a>
+<a href="https://codecov.io/gh/YoshiyukiKato/gimmickry">
+  <img src="https://codecov.io/gh/YoshiyukiKato/gimmickry/branch/master/graph/badge.svg" alt="Codecov" />
+</a>
+<a href="https://codebeat.co/projects/github-com-yoshiyukikato-gimmickry-master">
+  <img alt="codebeat badge" src="https://codebeat.co/badges/bd73ffcb-ce9a-43c9-8d30-d79dcf3c11f1" />
+</a>
 </p>
 
 # Gimmickry
@@ -16,7 +24,9 @@ To provide user-adaptive UI/UX conveniently.
 - small and encapsulated view component
 
 ## architecture
-<img width="500px" src="https://github.com/YoshiyukiKato/gimmickry/blob/develop/assets/architecture.png?raw=true"/>
+<p align="center">
+  <img width="500px" src="https://github.com/YoshiyukiKato/gimmickry/blob/develop/assets/architecture.png?raw=true"/>
+</p>
 
 ## usage
 

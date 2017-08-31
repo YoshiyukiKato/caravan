@@ -17,6 +17,10 @@ export default class App{
   view:View;
   mode:Mode;
 
+  /**
+   * Initialize a Gimmickry application
+   * @param mode "dev" or "prod"
+   */
   constructor(mode:Mode="dev"){
     this.user = new User();
     this.view = new View();
@@ -29,16 +33,33 @@ export default class App{
     }
   }
 
-  //開発モード用機能
+  /**
+   * An alias to `app.user.setAttrs` method.
+   * This method is exported as `window.__import_user_attrs_value__` by `dev` mode app
+   * @param attrs 
+   */
   __import_user_attrs_value__(attrs:any){
     this.user.setAttrs(attrs);
   }
 
+  /**
+   * An alias to `app.user.import` method.
+   * This method is exported as `window.__import_user_attr__` by `dev` mode app
+   * @param id 
+   * @param value 
+   * @param init 
+   */
   __import_user_attr__(id:string, value:any, init?:initFunc){
     const devId = `dev-${id}`;
     this.user.import(devId, value, init);
   }
 
+  /**
+   * An alias to `app.view.import` method.
+   * This method is exported as `window.__import_view_component__` by `dev` mode app
+   * @param id 
+   * @param render 
+   */
   __import_view_component__(id:string, render:renderFunc){
     const devId = `dev-${id}`;
     this.view.import(devId, render);

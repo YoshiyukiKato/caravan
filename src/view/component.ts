@@ -6,7 +6,7 @@ export default class ViewComponent{
   private state:any = {};
   
   /**
-   * add filter to the list of them. They will be used before redering
+   * Add filter to the list of them. They will be used before redering
    * @param filter 
    */
   useFilter(filter:Filter){
@@ -14,7 +14,7 @@ export default class ViewComponent{
   }
 
   /**
-   * exec render method if the user is a target
+   * Exec render method if the user is a target
    * @param userAttrs
    */
   _render(userAttrs:any):Promise<any>{

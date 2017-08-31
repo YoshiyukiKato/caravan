@@ -5,6 +5,11 @@ export default class UserAttr<T>{
   public value:T;
   private callback?:callback = (change:any) => {};
 
+  /**
+   * Set a value to an attribute
+   * @param nextAttrs The value to set
+   * @param silent A flag for whether execute callbacks or not
+   */
   set(nextValue:any, silent:boolean=false){
     this.value = Object.assign(this.value, nextValue);
     if(!silent && this.callback){
@@ -14,10 +19,19 @@ export default class UserAttr<T>{
     }
   }
 
+
+  
+  /**
+   * Set a callback function for when attribute value changed
+   * @param callback 
+   */
   onChange(callback:callback){
     this.callback = callback;
   }
 
+  /**
+   * A function called when an attribute passed to `User.use` method
+   */
   init(){
     if(this.value) this.set(this.value);
   }

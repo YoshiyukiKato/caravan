@@ -20,7 +20,7 @@ module.exports = {
   output: {
     publicPath: '/',
     sourcePrefix: '',
-    path: __dirname + "/example/dest",
+    path: __dirname + "/example/dist",
     filename: '[name].js',
     libraryTarget: "umd"
   },
@@ -34,7 +34,7 @@ module.exports = {
   devtool : 'inline-source-map',
 
   devServer: {
-    contentBase: path.join(__dirname, "example/dest"),
+    contentBase: path.join(__dirname, "example/dist"),
     compress: true,
     port: 9000
   },

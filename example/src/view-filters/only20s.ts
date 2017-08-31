@@ -6,7 +6,7 @@ export interface UserSchema{
 }
 
 export default class Only20s extends ViewFilter{
-  componentId:"only20s-html";
+  componentId:"profile-html";
   validate(userAttrs:UserSchema, componentId:string){
     const age = userAttrs["profile"].age;
     if(!age) return false;

@@ -10,7 +10,7 @@ function renderUserInfo(name:any,age:any,sex:any){
 }
 
 export default class ProfileHTML extends ViewComponent{
-  id : "user-html";
+  id : "profile-html";
   render(user:any){
     const profile = user["profile"];
     if (profile) {

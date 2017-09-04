@@ -3,6 +3,7 @@ declare global  {
         Gimmickry: {
             App: any;
             ViewComponent: any;
+            ViewFilter: any;
             UserAttr: any;
         };
     }

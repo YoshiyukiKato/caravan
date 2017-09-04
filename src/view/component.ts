@@ -21,7 +21,7 @@ export default class ViewComponent{
     try {
       const componentId = this.id;
       const isTargetUser = this.filters.reduce((acc:boolean, filter:Filter) => {
-        return filter.validate(userAttrs, componentId);
+        return acc && filter.validate(userAttrs, componentId);
       }, true);
 
       if(isTargetUser) this.render(userAttrs);

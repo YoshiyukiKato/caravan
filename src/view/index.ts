@@ -11,9 +11,9 @@ export default class View{
   private state:any = { renderCount : 0 };
 
   /**
-   * build component dynamically and use it
-   * @param id unique id of a component
-   * @param _render render function of a component
+   * Build a component dynamically and use it
+   * @param id A unique id of the component
+   * @param render A render function of the component
    */
   import(id:string, render:renderFunc){
     class Component extends ViewComponent{
@@ -25,8 +25,8 @@ export default class View{
   }
 
   /**
-   * add a view component to the list of them
-   * @param component view component
+   * Register a view component
+   * @param component The view component
    */
   use(component:ViewComponent){
     this.components.push(component);
@@ -41,7 +41,7 @@ export default class View{
 
   /**
    * Distribute a filter to target components
-   * @param filter has component id and validate function
+   * @param filter The filter
    */
   useFilter(filter:Filter){
     this.filters.push(filter);

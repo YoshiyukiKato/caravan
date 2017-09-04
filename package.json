@@ -1,6 +1,6 @@
 {
   "name": "gimmickry",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Web app framework for user driven view rendering.",
   "repository": {
     "type": "git",
@@ -15,7 +15,8 @@
     "build": "$(npm bin)/webpack --config webpack.config.js",
     "test": "$(npm bin)/nyc $(npm bin)/mocha test/**/*.test.ts",
     "server": "$(npm bin)/webpack-dev-server --config webpack-server.config.js --watch --debug",
-    "report-coverage": "$(npm bin)/nyc report --reporter=text-lcov > coverage.lcov && $(npm bin)/codecov"
+    "report-coverage": "$(npm bin)/nyc report --reporter=text-lcov > coverage.lcov && $(npm bin)/codecov",
+    "doc": "$(npm bin)/typedoc --out $GITHUB_IO_PATH/docs/gimmickry"
   },
   "nyc": {
     "include": [
@@ -69,6 +70,7 @@
     "sinon": "^2.1.0",
     "style-loader": "^0.16.1",
     "ts-loader": "^2.1.0",
+    "typedoc": "^0.8.0",
     "typescript": "^2.3.4",
     "webpack": "^2.2.1",
     "webpack-dev-server": "^2.4.1"

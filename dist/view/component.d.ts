@@ -4,12 +4,12 @@ export default class ViewComponent {
     readonly filters: Filter[];
     private state;
     /**
-     * add filter to the list of them. They will be used before redering
+     * Add filter to the list of them. They will be used before redering
      * @param filter
      */
     useFilter(filter: Filter): void;
     /**
-     * exec render method if the user is a target
+     * Exec render method if the user is a target
      * @param userAttrs
      */
     _render(userAttrs: any): Promise<any>;

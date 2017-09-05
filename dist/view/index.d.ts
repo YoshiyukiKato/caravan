@@ -1,5 +1,3 @@
-/// <reference types="bluebird" />
-import * as Promise from "bluebird";
 import ViewComponent from "./component";
 import Filter from "./filter";
 export declare type renderFunc = (userAttrs: any) => any;
@@ -9,19 +7,19 @@ export default class View {
     private userAttrs;
     private state;
     /**
-     * build component dynamically and use it
-     * @param id unique id of a component
-     * @param _render render function of a component
+     * Build a component dynamically and use it
+     * @param id A unique id of the component
+     * @param render A render function of the component
      */
     import(id: string, render: renderFunc): void;
     /**
-     * add a view component to the list of them
-     * @param component view component
+     * Register a view component
+     * @param component The view component
      */
     use(component: ViewComponent): void;
     /**
      * Distribute a filter to target components
-     * @param filter has component id and validate function
+     * @param filter The filter
      */
     useFilter(filter: Filter): void;
     /**

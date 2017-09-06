@@ -3,7 +3,7 @@ const webpack = require('webpack');
 
 let entry = {
   "index" : ["./src/index"],
-  "web" : ["./src/web"],
+  //"web" : ["./src/web"],
 };
 
 module.exports = {
@@ -19,7 +19,8 @@ module.exports = {
     sourcePrefix: '',
     path: __dirname + "/dist",
     filename: '[name].js',
-    libraryTarget: "umd"
+    libraryTarget: "umd",
+    libraryExport: "Gimmickry"
   },
 
   target: "web",
@@ -32,24 +33,23 @@ module.exports = {
 
   module : {
     rules: [
-      {
+      /*{
         test: /\.(js|jsx)?$/,
-        loader : 'babel-loader',
+        use : [
+          { loader : 'babel-loader' },
+        ],
         exclude : /node_modules/,
         include : __dirname + "/src/js"
-      },
+      },*/
       
       {
         test: /\.(ts|tsx)?$/,
-        loader : ["babel-loader", "ts-loader"],
+        use : [
+          { loader : "babel-loader" },
+          { loader : "ts-loader" }
+        ],
         exclude : /node_modules/,
-        include : [__dirname + "/src", __dirname + "/example"]
-      },
-      
-      {
-        test : /\.scss$/,
-        loaders : ["style-loader", "css-loader", "sass-loader"],
-        include : __dirname + "/src/scss"
+        include : __dirname + "/src"
       }
     ]
   }

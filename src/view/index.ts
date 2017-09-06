@@ -1,4 +1,3 @@
-import * as Promise from "bluebird";
 import ViewComponent from "./component";
 import Filter from "./filter";
 

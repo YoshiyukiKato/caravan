@@ -1,4 +1,3 @@
-import Promise from "bluebird";
 import User,{initFunc} from "./user";
 import View,{renderFunc} from "./view";
 

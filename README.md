@@ -28,7 +28,7 @@ To provide user-adaptive UI/UX conveniently.
 
 ## architecture
 <p align="center">
-  <img width="500px" src="https://github.com/YoshiyukiKato/gimmickry/blob/develop/assets/architecture.png?raw=true"/>
+  <img width="700px" src="https://github.com/YoshiyukiKato/gimmickry/blob/develop/assets/architecture.png?raw=true"/>
 </p>
 
 ## usage

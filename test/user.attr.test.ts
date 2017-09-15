@@ -40,10 +40,14 @@ describe("UserAttr", () => {
   });
 
   describe("uptate value", () => {
-    it("set next value", () => {
-      const attr = new TestAttr();
-      attr.set({ count: 1 });
-      assert(attr.value.count === 1);
+    describe("set next value", () => {
+      it("prev value and next value have different pointer", () => {
+        const attr = new TestAttr();
+        const prevValue = attr.value;
+        const nextValue = { count : 1 };
+        attr.set(nextValue);
+        assert(prevValue !== nextValue);
+      });
     });
 
     describe("set callback for when attribute updated", () => {

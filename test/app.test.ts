@@ -2,13 +2,13 @@ import App from "../src/app";
 import * as assert from "power-assert";
 
 describe("app", () => {
-  context("prod mode", () => {
+  context("production mode", () => {
     let window:any = {};
     window.__import_view_component__ = null;
     window.__import_user_attr__ = null;
     window.__import_user_attrs_value__ = null;
     global.window = window;
-    const app = new App("prod");
+    const app = new App("production");
     it("does not exist __import_view_component__", () => {
       assert(!window.__import_view_component__);
     });
@@ -22,7 +22,7 @@ describe("app", () => {
     });
   });
   
-  context("dev mode", () => {
+  context("development mode", () => {
     let window:any = {};
     window.__import_view_component__ = null;
     window.__import_user_attr__ = null;
@@ -38,7 +38,7 @@ describe("app", () => {
         assert(window.__import_view_component__);
       });
     });
-    
+
     describe("__import_user_attr__", () => {
       it("is alias of app.user.import", () => {
         const attr = { key : "value" };

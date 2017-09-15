@@ -39,7 +39,8 @@ export default class User{
    * @param silent A flag for whether execute callbacks or not
    */
   setAttrs(this:User, nextAttrs:any, silent:boolean=false){
-    this.attrs = Object.assign(this.attrs, nextAttrs);
+    const currentAttrs = Object.assign({}, this.attrs);
+    this.attrs = Object.assign(currentAttrs, nextAttrs);
     if(!silent) this.callbacks.forEach((cb:callback) => cb(this.attrs));
   }
 

@@ -11,7 +11,8 @@ export default class UserAttr<T>{
    * @param silent A flag for whether execute callbacks or not
    */
   set(nextValue:any, silent:boolean=false){
-    this.value = Object.assign(this.value, nextValue);
+    const currentValue = Object.assign({}, this.value);
+    this.value = Object.assign(currentValue, nextValue);
     if(!silent && this.callback){
       let attr:any = {};
       attr[this.id] = this.value;

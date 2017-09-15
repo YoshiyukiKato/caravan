@@ -12,7 +12,7 @@
   <img alt="codebeat badge" src="https://codebeat.co/badges/bd73ffcb-ce9a-43c9-8d30-d79dcf3c11f1" alt="codebeat"/>
 </a>
 <a href="https://www.npmjs.com/package/gimmickry">
-  <img src="https://img.shields.io/npm/v/npm.svg" alt="npm"/>
+  <img src="https://img.shields.io/npm/v/gimmickry.svg" alt="npm"/>
 </a>
 </p>
 
@@ -28,7 +28,7 @@ To provide user-adaptive UI/UX conveniently.
 
 ## architecture
 <p align="center">
-  <img width="500px" src="https://github.com/YoshiyukiKato/gimmickry/blob/develop/assets/architecture.png?raw=true"/>
+  <img width="700px" src="https://github.com/YoshiyukiKato/gimmickry/blob/develop/assets/architecture.png?raw=true"/>
 </p>
 
 ## usage

@@ -27,17 +27,35 @@ describe("User", () => {
     assert(user);
   });
 
-  describe("set attrs value", () => {
-    it("passes", () => {
-      const user = new User();
-      const attr = {
-        key : "value1"
-      };
-      const attrs = {
-        attrName : attr
-      };
-      user.setAttrs(attrs);
-      assert.deepEqual(user.attrs.attrName, attr);
+  describe("#setAttrs", () => {
+    describe("set attrs value", () => {
+      it("set attrs value with its name as key", () => {
+        const user = new User();
+        const attr = {
+          key : "value1"
+        };
+        const attrs = {
+          attrName : attr
+        };
+        user.setAttrs(attrs);
+        assert.deepEqual(user.attrs.attrName, attr);
+      });
+      
+      it("prev attrs and next attrs have different pointer", () => {
+        const user = new User();
+        const attrs1 = {
+          key : "value1"
+        };
+        const attrs2 = {
+          key : "value1"
+        };
+
+        user.setAttrs(attrs1);
+        user.setAttrs(attrs2);
+        assert(user.attrs !== attrs1)
+        assert(user.attrs !== attrs2)
+        assert(attrs1 !== attrs2)
+      }); 
     });
 
     it("set callback for when attributes changed", () => {

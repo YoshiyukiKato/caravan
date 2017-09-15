@@ -9,7 +9,12 @@ declare global{
   }
 }
 
-export type Mode = "dev"|"prod";
+export type Mode = "development"|"production";
+
+/**
+ * 
+ */
+
 export default class App{
   isInitialized:boolean = false;
   user:User;
@@ -20,12 +25,12 @@ export default class App{
    * Initialize a Gimmickry application
    * @param mode "dev" or "prod"
    */
-  constructor(mode:Mode="dev"){
+  constructor(mode:Mode="development"){
     this.user = new User();
     this.view = new View();
     this.user.onChange((user:User) => { return this.view.render(user); });
     this.mode = mode;
-    if(this.mode === "dev"){
+    if(this.mode === "development"){
       window.__import_view_component__ = this.__import_view_component__.bind(this);
       window.__import_user_attr__ = this.__import_user_attr__.bind(this);
       window.__import_user_attrs_value__ = this.__import_user_attrs_value__.bind(this);
@@ -44,9 +49,10 @@ export default class App{
   /**
    * An alias to `app.user.import` method.
    * This method is exported as `window.__import_user_attr__` by `dev` mode app
-   * @param id 
-   * @param value 
-   * @param init 
+   * @method __import_user_attr__
+   * @param {string} id 
+   * @param {any} value 
+   * @param {initFunc} init 
    */
   __import_user_attr__(id:string, value:any, init?:initFunc){
     const devId = `dev-${id}`;
@@ -56,8 +62,9 @@ export default class App{
   /**
    * An alias to `app.view.import` method.
    * This method is exported as `window.__import_view_component__` by `dev` mode app
-   * @param id 
-   * @param render 
+   * @method __import_view_component__
+   * @param {string} id 
+   * @param {renderFunc} render 
    */
   __import_view_component__(id:string, render:renderFunc){
     const devId = `dev-${id}`;

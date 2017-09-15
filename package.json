@@ -1,6 +1,6 @@
 {
   "name": "gimmickry",
-  "version": "0.1.5",
+  "version": "0.1.7",
   "description": "Web app framework for user driven view rendering.",
   "repository": {
     "type": "git",

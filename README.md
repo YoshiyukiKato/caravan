@@ -11,6 +11,9 @@
 <a href="https://codebeat.co/projects/github-com-yoshiyukikato-gimmickry-master">
   <img alt="codebeat badge" src="https://codebeat.co/badges/bd73ffcb-ce9a-43c9-8d30-d79dcf3c11f1" alt="codebeat"/>
 </a>
+<a href='https://gemnasium.com/github.com/YoshiyukiKato/gimmickry'>
+  <img src="https://gemnasium.com/badges/github.com/YoshiyukiKato/gimmickry.svg" alt="Dependency Status" />
+</a>
 <a href="https://www.npmjs.com/package/gimmickry">
   <img src="https://img.shields.io/npm/v/gimmickry.svg" alt="npm"/>
 </a>
